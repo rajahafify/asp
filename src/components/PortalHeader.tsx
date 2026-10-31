@@ -118,26 +118,70 @@ export const PortalHeader: React.FC<PortalHeaderProps> = ({
 
               <div className="py-1">
                 <span className="px-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                  Step 1: Switch Account / Persona
+                  Switch Case Persona
                 </span>
                 <button
                   onClick={() => {
-                    onSwitchUser('Jane Tan', 'SingaLogistics Pte. Ltd. (Singapore)');
+                    onSwitchUser('Faizal Hakim', 'RouteSense AI Sdn Bhd (Malaysia)');
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 text-slate-700 flex items-center justify-between"
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
+                    userProfile.name === 'Faizal Hakim' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                  }`}
                 >
-                  <span>Jane Tan (Singapore Founder)</span>
-                  <span className="text-[10px] text-emerald-600 font-bold">Active</span>
+                  <div>
+                    <span className="block">Case 1: Faizal Hakim</span>
+                    <span className="text-[10px] text-slate-400 block font-normal">RouteSense AI (Malaysia 🇲🇾)</span>
+                  </div>
+                  {userProfile.name === 'Faizal Hakim' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
+
                 <button
                   onClick={() => {
-                    onSwitchUser('Reza Pratama', 'PT FinNusantara Labs (Indonesia)');
+                    onSwitchUser('Dr. Cheryl Lim', 'EcoPack Labs Pte Ltd (Singapore)');
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full text-left px-2 py-1.5 rounded-lg hover:bg-slate-50 text-slate-700"
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
+                    userProfile.name === 'Dr. Cheryl Lim' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                  }`}
                 >
-                  Reza Pratama (Indonesia Founder)
+                  <div>
+                    <span className="block">Case 2: Dr. Cheryl Lim</span>
+                    <span className="text-[10px] text-slate-400 block font-normal">EcoPack Labs (Singapore 🇸🇬)</span>
+                  </div>
+                  {userProfile.name === 'Dr. Cheryl Lim' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                </button>
+
+                <button
+                  onClick={() => {
+                    onSwitchUser('Dr. Ariff Rahman', 'MedFlow Technologies Sdn Bhd (Malaysia)');
+                    setIsUserMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
+                    userProfile.name === 'Dr. Ariff Rahman' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                  }`}
+                >
+                  <div>
+                    <span className="block">Case 3: Dr. Ariff Rahman</span>
+                    <span className="text-[10px] text-slate-400 block font-normal">MedFlow Technologies (Malaysia 🇲🇾)</span>
+                  </div>
+                  {userProfile.name === 'Dr. Ariff Rahman' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                </button>
+
+                <button
+                  onClick={() => {
+                    onSwitchUser('Somchai Prasert', 'AquaSense Innovations Co., Ltd. (Thailand)');
+                    setIsUserMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
+                    userProfile.name === 'Somchai Prasert' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                  }`}
+                >
+                  <div>
+                    <span className="block">Case 4: Somchai Prasert</span>
+                    <span className="text-[10px] text-slate-400 block font-normal">AquaSense Innovations (Thailand 🇹🇭)</span>
+                  </div>
+                  {userProfile.name === 'Somchai Prasert' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
               </div>
 

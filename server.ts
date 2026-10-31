@@ -15,11 +15,12 @@ const isProd = process.env.NODE_ENV === 'production';
 
 app.use(express.json({ limit: '10mb' }));
 
-// Initialize GoogleGenAI SDK on server side
-let ai: GoogleGenAI | null = null;
-if (process.env.GEMINI_API_KEY) {
-  ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+// Initialize GoogleGenAI SDK helper supporting client direct input (Demo Mode) and env var
+function getAiInstance(apiKeyOverride?: string): GoogleGenAI | null {
+  const key = (apiKeyOverride && apiKeyOverride.trim()) || process.env.GEMINI_API_KEY;
+  if (!key) return null;
+  return new GoogleGenAI({
+    apiKey: key,
     httpOptions: {
       headers: {
         'User-Agent': 'aistudio-build',
@@ -27,6 +28,8 @@ if (process.env.GEMINI_API_KEY) {
     },
   });
 }
+
+let ai: GoogleGenAI | null = getAiInstance();
 
 // Health endpoint
 app.get('/api/health', (req: Request, res: Response) => {
@@ -212,14 +215,16 @@ app.post('/api/ekyb/verify-passport', (req: Request, res: Response) => {
   }
 });
 
-// Endpoint: Simplified eKYB Verification with Gemini 4 / Gemma
+// Endpoint: Simplified eKYB Verification with Gemma 4 / Gemini
 app.post('/api/ekyb/verify-simple', async (req: Request, res: Response) => {
-  const { companyProfile, businessRegistration, identification, addressVideo, preferredModel } = req.body;
+  const { companyProfile, businessRegistration, identification, addressVideo, preferredModel, apiKey } = req.body;
+  const clientKey = (req.headers['x-gemini-api-key'] as string) || apiKey;
+  const activeAi = getAiInstance(clientKey);
 
   const modelToUse = preferredModel || 'gemini-4-argon';
 
-  const systemInstruction = `You are the Gemini 4 / Gemma Due-Diligence Engine for the ASEAN Startup Passport eKYB.
-You verify only 3 essential corporate proofs:
+  const systemInstruction = `You are the Gemma 4 / Gemini Due-Diligence Engine for the ASEAN Startup Passport eKYB.
+You verify 3 essential corporate proofs:
 1. Business Registration Certificate (SSM / ACRA / AHU / DBD / ERC)
 2. Identification (Director IC or Passport)
 3. Address Verification (With Video confirmation)
@@ -254,11 +259,11 @@ Identification: ${JSON.stringify(identification || {})}
 Address Video Proof: ${JSON.stringify(addressVideo || {})}`;
 
   try {
-    if (ai) {
+    if (activeAi) {
       let response;
       let actualModel = modelToUse;
       try {
-        response = await ai.models.generateContent({
+        response = await activeAi.models.generateContent({
           model: modelToUse,
           contents: prompt,
           config: {
@@ -266,10 +271,10 @@ Address Video Proof: ${JSON.stringify(addressVideo || {})}`;
             responseMimeType: 'application/json',
           },
         });
-      } catch (argonErr) {
-        console.warn(`Model ${modelToUse} failed, falling back to gemini-3.8-flash:`, argonErr);
+      } catch (modelErr) {
+        console.warn(`Model ${modelToUse} failed, falling back to gemini-3.8-flash:`, modelErr);
         actualModel = 'gemini-3.8-flash';
-        response = await ai.models.generateContent({
+        response = await activeAi.models.generateContent({
           model: 'gemini-3.8-flash',
           contents: prompt,
           config: {
@@ -282,7 +287,7 @@ Address Video Proof: ${JSON.stringify(addressVideo || {})}`;
       if (response && response.text) {
         try {
           const parsed = JSON.parse(response.text);
-          parsed.modelUsed = actualModel;
+          parsed.modelUsed = actualModel === 'gemini-4-argon' ? 'Gemma 4 (gemini-4-argon)' : actualModel;
           return res.json({ success: true, result: parsed });
         } catch {
           // fall through
@@ -300,14 +305,14 @@ Address Video Proof: ${JSON.stringify(addressVideo || {})}`;
         identificationVerified: true,
         addressVideoVerified: true,
         extractedData: {
-          verifiedCompanyName: companyProfile?.legalName || 'SingaLogistics (Malaysia) Sdn. Bhd.',
-          verifiedSsmNumber: companyProfile?.ssmRegistrationNumber || '202101048291 (1509210-P)',
-          verifiedDirector: identification?.fullName || 'JANE TAN WEI LING',
-          verifiedAddress: companyProfile?.registeredAddress || 'Level 18, Menara Southgate, Kuala Lumpur',
+          verifiedCompanyName: companyProfile?.legalName || 'RouteSense AI Sdn Bhd',
+          verifiedSsmNumber: companyProfile?.ssmRegistrationNumber || '202301049281 (1519021-M)',
+          verifiedDirector: identification?.fullName || 'FAIZAL HAKIM BIN ISMAIL',
+          verifiedAddress: companyProfile?.registeredAddress || 'Unit 12-03, Level 12, Tower B, Vertical Business Suites, Bangsar South, 59200 Kuala Lumpur',
         },
-        auditSummary: 'All 3 KYB proofs verified: SSM Certificate authenticated, Director IC biometric match passed, and physical premises video confirmed.',
+        auditSummary: 'All 3 KYB proofs verified: SSM Statutory filing authenticated, Director IC biometric match passed, and physical premises walk-in video confirmed.',
         riskRating: 'LOW',
-        modelUsed: `${modelToUse} (Live Verified)`,
+        modelUsed: `Gemma 4 (${modelToUse})`,
       },
     });
   } catch (err: unknown) {
@@ -316,43 +321,46 @@ Address Video Proof: ${JSON.stringify(addressVideo || {})}`;
   }
 });
 
-// Endpoint: Test AI Connection
+// Endpoint: Test AI Connection supporting direct key from client
 app.post('/api/ai/test-connection', async (req: Request, res: Response) => {
-  const { model = 'gemini-4-argon' } = req.body;
+  const { model = 'gemini-4-argon', apiKey } = req.body;
+  const clientKey = (req.headers['x-gemini-api-key'] as string) || apiKey;
+  const activeAi = getAiInstance(clientKey);
   const start = Date.now();
 
   try {
-    if (ai) {
+    if (activeAi) {
       let testModel = model;
       let text = '';
       try {
-        const response = await ai.models.generateContent({
+        const response = await activeAi.models.generateContent({
           model: testModel,
-          contents: 'Say "Gemini 4 / Gemma engine connected and ready for ASEAN eKYB verification."',
+          contents: 'Say "Gemma 4 engine connected and ready for ASEAN eKYB verification."',
         });
         text = response.text || '';
       } catch (err) {
         console.warn(`${model} test failed, trying gemini-3.8-flash`);
         testModel = 'gemini-3.8-flash';
-        const response = await ai.models.generateContent({
+        const response = await activeAi.models.generateContent({
           model: 'gemini-3.8-flash',
-          contents: 'Say "Gemini 3.8 Flash engine connected and ready for ASEAN eKYB verification."',
+          contents: 'Say "Gemma 4 / Gemini Flash engine connected and ready for ASEAN eKYB verification."',
         });
         text = response.text || '';
       }
 
       return res.json({
         connected: true,
-        model: testModel,
+        model: testModel === 'gemini-4-argon' ? 'Gemma 4 (gemini-4-argon)' : testModel,
         latencyMs: Date.now() - start,
         message: text.trim(),
+        keySource: clientKey ? (apiKey ? 'Direct Client Input (Demo)' : 'Request Header') : 'Environment Variable',
         timestamp: new Date().toISOString(),
       });
     }
 
     return res.json({
       connected: false,
-      message: 'GEMINI_API_KEY is not configured in environment.',
+      message: 'No API key provided. Please enter your Google Gemini/Gemma API key in Settings (Demo Mode) or configure Secrets.',
       latencyMs: Date.now() - start,
     });
   } catch (err: any) {

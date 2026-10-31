@@ -23,6 +23,7 @@ import {
   CORPORATE_CHALLENGES,
   INITIAL_DEALS,
   INITIAL_NOTIFICATIONS,
+  DEMO_STARTUP_PERSONAS,
 } from './data/mockDeals';
 import { SAMPLE_DOSSIERS } from './data/mockDossiers';
 import { CorporateChallenge, Deal, DealStage, UserProfile, AppNotification } from './types/deals';
@@ -145,20 +146,18 @@ export default function App() {
   };
 
   const handleSwitchUser = (name: string, company: string) => {
-    if (name.includes('Reza')) {
-      setUserProfile((prev) => ({
-        ...prev,
-        name: 'Reza Pratama',
-        companyName: 'PT FinNusantara Labs Indonesia',
-        companyCountry: 'Indonesia 🇮🇩',
-        uenOrRegNumber: 'AHU-0048192.AH.01.01.TAHUN 2022',
-        ekybPassportNumber: 'ASP-ID-2026-91402',
-        airsScore: 914,
-      }));
-      setCurrentDossier(SAMPLE_DOSSIERS[0]);
+    if (name.includes('Cheryl') || company.includes('EcoPack')) {
+      setUserProfile(DEMO_STARTUP_PERSONAS.ecopack);
+      setFocusedDealId('deal-case-2-ecopack');
+    } else if (name.includes('Ariff') || company.includes('MedFlow')) {
+      setUserProfile(DEMO_STARTUP_PERSONAS.medflow);
+      setFocusedDealId('deal-case-3-medflow');
+    } else if (name.includes('Somchai') || company.includes('AquaSense')) {
+      setUserProfile(DEMO_STARTUP_PERSONAS.aquasense);
+      setFocusedDealId('deal-case-4-aquasense');
     } else {
-      setUserProfile(INITIAL_USER_PROFILE);
-      setCurrentDossier(SAMPLE_DOSSIERS[1]);
+      setUserProfile(DEMO_STARTUP_PERSONAS.routesense);
+      setFocusedDealId('deal-case-1-routesense');
     }
   };
 

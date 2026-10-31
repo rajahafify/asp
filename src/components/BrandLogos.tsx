@@ -67,6 +67,30 @@ export const CorporateLogoBadge: React.FC<{
   }[size];
 
   switch (type.toLowerCase()) {
+    case 'nusantara':
+      return (
+        <div className={`flex items-center justify-center rounded-xl bg-[#e6f4ea] px-3 font-bold text-[#137333] ${sizeClasses}`}>
+          <span className="tracking-tight text-xs font-black font-sans uppercase">Nusantara</span>
+        </div>
+      );
+    case 'greenventures':
+      return (
+        <div className={`flex items-center justify-center gap-1 rounded-xl bg-[#edf7ed] px-3 font-bold text-[#2e7d32] ${sizeClasses}`}>
+          <span className="text-[11px] font-black tracking-tight uppercase">GreenVC</span>
+        </div>
+      );
+    case 'pacificcare':
+      return (
+        <div className={`flex items-center justify-center gap-1 rounded-xl bg-[#e8f0fe] px-3 font-bold text-[#1a73e8] ${sizeClasses}`}>
+          <span className="text-[11px] font-black tracking-tight">PacificCare</span>
+        </div>
+      );
+    case 'vietagri':
+      return (
+        <div className={`flex items-center justify-center gap-1 rounded-xl bg-[#fef7e0] px-3 font-bold text-[#b06000] ${sizeClasses}`}>
+          <span className="text-[11px] font-black tracking-tight">VietAgri</span>
+        </div>
+      );
     case 'grab':
       return (
         <div className={`flex items-center justify-center rounded-xl bg-[#e8f8f0] px-3 font-bold text-[#00b14f] ${sizeClasses}`}>
