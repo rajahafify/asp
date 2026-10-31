@@ -348,6 +348,8 @@ export default function App() {
           {/* Simplified eKYB Verification View */}
           {activeNavTab === 'ekyb' && (
             <SimpleEkybView
+              key={userProfile.name}
+              startEmpty={userProfile.name === DEMO_STARTUP_PERSONAS.blank.name}
               onVerificationComplete={(state) => {
                 const newNotif: AppNotification = {
                   id: `notif-${Date.now()}`,
