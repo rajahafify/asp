@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DEFAULT_KYB_DATA, EMPTY_KYB_DATA } from '../data/mockSimpleKyb';
 import { KybVerificationState } from '../types/simpleKyb';
 import {
@@ -31,6 +31,9 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const ssmInputRef = useRef<HTMLInputElement>(null);
+  const identificationInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
 
   // Editable profile state
   const [companyName, setCompanyName] = useState(kybState.companyProfile.legalName);
@@ -54,15 +57,139 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
     setIsEditingProfile(false);
   };
 
+  const formatFileSize = (bytes: number) =>
+    bytes >= 1024 * 1024 ? `${(bytes / (1024 * 1024)).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
+
+  // Store a picked file as an object URL and reset that proof to pending review
+  const handleProofUpload = (
+    file: File,
+    section: 'businessRegistration' | 'identification' | 'addressVideo',
+  ) => {
+    const uploadedAt = new Date().toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    const url = URL.createObjectURL(file);
+    const previousUrl =
+      section === 'businessRegistration'
+        ? kybState.businessRegistration.photoUrl
+        : section === 'identification'
+          ? kybState.identification.photoUrl
+          : kybState.addressVideo.videoUrl;
+    if (previousUrl.startsWith('blob:')) URL.revokeObjectURL(previousUrl);
+
+    if (section === 'businessRegistration') {
+      setKybState((prev) => ({
+        ...prev,
+        businessRegistration: {
+          ...prev.businessRegistration,
+          photoUrl: url,
+          docName: file.name,
+          fileSize: formatFileSize(file.size),
+          uploadedAt,
+          status: 'pending',
+        },
+      }));
+    } else if (section === 'identification') {
+      setKybState((prev) => ({
+        ...prev,
+        identification: {
+          ...prev.identification,
+          photoUrl: url,
+          uploadedAt,
+          status: 'pending',
+        },
+      }));
+    } else {
+      // Read the clip length from the browser once metadata loads
+      const probe = document.createElement('video');
+      probe.preload = 'metadata';
+      probe.onloadedmetadata = () => {
+        const seconds = Math.round(probe.duration);
+        setKybState((prev) => ({
+          ...prev,
+          addressVideo: { ...prev.addressVideo, duration: `${seconds}s`, uploadedAt, status: 'pending' },
+        }));
+      };
+      probe.src = url;
+      setKybState((prev) => ({
+        ...prev,
+        addressVideo: { ...prev.addressVideo, videoUrl: url, uploadedAt, status: 'pending' },
+      }));
+    }
+  };
+  // Draw an image URL (uploaded file, or a sample SVG) to a JPEG base64 string
+  const imageUrlToJpeg = (url: string) =>
+    new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || 1200;
+        canvas.height = img.naturalHeight || 900;
+        canvas.getContext('2d')?.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.9).split(',')[1]);
+      };
+      img.onerror = () => reject(new Error('Could not read the SSM or IC file'));
+      img.src = url;
+    });
+
+  // Grab one frame from the middle of the address video (or the first frame for very short clips)
+  const videoFrameToJpeg = (url: string) =>
+    new Promise<string>((resolve, reject) => {
+      const video = document.createElement('video');
+      video.muted = true;
+      video.preload = 'auto';
+      const draw = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d')?.drawImage(video, 0, 0);
+        resolve(canvas.toDataURL('image/jpeg', 0.9).split(',')[1]);
+      };
+      video.onloadeddata = () => {
+        const target = Number.isFinite(video.duration) && video.duration > 0 ? Math.min(1, video.duration / 2) : 0;
+        if (target > 0) video.currentTime = target;
+        else draw();
+      };
+      video.onseeked = draw;
+      video.onerror = () => reject(new Error('Could not read the address video'));
+      video.src = url;
+    });
+
   // Run AI Verification backed by Gemma 4
   const handleRunAiVerification = async () => {
     setIsVerifying(true);
     setVerificationFeedback(null);
 
     const activeKey = localStorage.getItem('asp_demo_gemini_api_key') || '';
-    const preferredModel = localStorage.getItem('asp_preferred_model') || 'gemini-4-argon';
+    const savedModel = localStorage.getItem('asp_preferred_model') || 'gemma-4';
+    const preferredModel = savedModel === 'gemma-4' ? 'gemma-4-26b-a4b-it' : savedModel;
 
     try {
+      const documents: { label: string; mimeType: string; data: string }[] = [];
+      if (kybState.businessRegistration.photoUrl) {
+        documents.push({
+          label: 'SSM business registration certificate',
+          mimeType: 'image/jpeg',
+          data: await imageUrlToJpeg(kybState.businessRegistration.photoUrl),
+        });
+      }
+      if (kybState.identification.photoUrl) {
+        documents.push({
+          label: 'Director identification (IC or passport)',
+          mimeType: 'image/jpeg',
+          data: await imageUrlToJpeg(kybState.identification.photoUrl),
+        });
+      }
+      if (kybState.addressVideo.videoUrl) {
+        documents.push({
+          label: 'Address walk-in video (one frame from the middle of the clip)',
+          mimeType: 'image/jpeg',
+          data: await videoFrameToJpeg(kybState.addressVideo.videoUrl),
+        });
+      }
+      if (documents.length === 0) {
+        setVerificationFeedback('Upload the SSM certificate, the IC or passport, and the address video first.');
+        return;
+      }
+
       const res = await fetch('/api/ekyb/verify-simple', {
         method: 'POST',
         headers: {
@@ -71,16 +198,19 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
         },
         body: JSON.stringify({
           companyProfile: kybState.companyProfile,
-          businessRegistration: kybState.businessRegistration,
-          identification: kybState.identification,
-          addressVideo: kybState.addressVideo,
-          preferredModel: preferredModel === 'gemma-4' ? 'gemini-4-argon' : preferredModel,
+          businessRegistration: { ...kybState.businessRegistration, photoUrl: '' },
+          identification: { ...kybState.identification, photoUrl: '' },
+          addressVideo: { ...kybState.addressVideo, videoUrl: '' },
+          documents,
+          preferredModel,
           apiKey: activeKey,
         }),
       });
 
       const data = await res.json();
-      if (data.success && data.result) {
+      if (!data.success) {
+        setVerificationFeedback(data.error || 'Verification failed. Check the Gemini key in Settings.');
+      } else if (data.result) {
         const result = data.result;
         setKybState((prev) => ({
           ...prev,
@@ -93,14 +223,18 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
             `Risk assessment rating: ${result.riskRating || 'LOW'}`,
           ],
         }));
-        setVerificationFeedback(`Verified by ${result.modelUsed || 'Gemma 4'}: All 3 proofs authenticated.`);
+        setVerificationFeedback(
+          result.isApproved
+            ? `Verified by ${result.modelUsed || 'Gemma 4'}: documents checked against the company profile.`
+            : `Not approved by ${result.modelUsed || 'Gemma 4'}. See the audit remarks below.`,
+        );
         if (onVerificationComplete) {
           onVerificationComplete(kybState);
         }
       }
     } catch (err) {
       console.error(err);
-      setVerificationFeedback('Verification completed via Gemma 4 local compliance engine.');
+      setVerificationFeedback(`Could not run verification: ${err instanceof Error ? err.message : 'unknown error'}`);
     } finally {
       setIsVerifying(false);
     }
@@ -362,8 +496,19 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               </div>
             </div>
 
+            <input
+              ref={ssmInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleProofUpload(file, 'businessRegistration');
+                e.target.value = '';
+              }}
+            />
             <button
-              onClick={() => alert('Camera / Photo upload simulated: SSM Document Photo updated.')}
+              onClick={() => ssmInputRef.current?.click()}
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
             >
               <Camera className="h-3.5 w-3.5 text-indigo-600" />
@@ -425,8 +570,19 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               </div>
             </div>
 
+            <input
+              ref={identificationInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleProofUpload(file, 'identification');
+                e.target.value = '';
+              }}
+            />
             <button
-              onClick={() => alert('Camera / Photo upload simulated: IC/Passport photo updated.')}
+              onClick={() => identificationInputRef.current?.click()}
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
             >
               <Upload className="h-3.5 w-3.5 text-indigo-600" />
@@ -494,8 +650,20 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               </div>
             </div>
 
+            <input
+              ref={videoInputRef}
+              type="file"
+              accept="video/*"
+              capture="environment"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleProofUpload(file, 'addressVideo');
+                e.target.value = '';
+              }}
+            />
             <button
-              onClick={() => alert('Video upload simulated: Recorded premises walk-in video updated.')}
+              onClick={() => videoInputRef.current?.click()}
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
             >
               <Video className="h-3.5 w-3.5 text-indigo-600" />

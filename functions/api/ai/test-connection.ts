@@ -3,7 +3,7 @@ import { Env, generate, json, keySource, readJson, resolveKey } from '../../_lib
 // Port of POST /api/ai/test-connection.
 export const onRequestPost = async ({ request, env }: { request: Request; env: Env }) => {
   const body = (await readJson(request)) ?? {};
-  const model = body.model || 'gemini-4-argon';
+  const model = body.model || 'gemma-4-26b-a4b-it';
   const key = resolveKey(request, env, body.apiKey);
   const start = Date.now();
 
@@ -27,7 +27,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     }
     return json({
       connected: true,
-      model: testModel === 'gemini-4-argon' ? 'Gemma 4 (gemini-4-argon)' : testModel,
+      model: testModel,
       latencyMs: Date.now() - start,
       message: text.trim(),
       keySource: keySource(request, env, body.apiKey),
