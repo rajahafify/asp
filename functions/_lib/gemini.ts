@@ -6,6 +6,13 @@ export interface Env {
   GEMINI_API_KEY?: string;
 }
 
+// A base64 image or video frame sent alongside the prompt.
+export interface InlineMedia {
+  label: string;
+  mimeType: string;
+  data: string;
+}
+
 export function resolveKey(request: Request, env: Env, bodyKey?: string): string | null {
   return request.headers.get('x-gemini-api-key')?.trim() || bodyKey?.trim() || env.GEMINI_API_KEY?.trim() || null;
 }
@@ -19,14 +26,22 @@ export function keySource(request: Request, env: Env, bodyKey?: string): string 
 export async function generate(
   apiKey: string,
   model: string,
-  { system, prompt, json = false }: { system?: string; prompt: string; json?: boolean },
+  { system, prompt, json = false, media = [] }: { system?: string; prompt: string; json?: boolean; media?: InlineMedia[] },
 ): Promise<string> {
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
     body: JSON.stringify({
       ...(system ? { systemInstruction: { parts: [{ text: system }] } } : {}),
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: prompt },
+            ...media.map((m) => ({ inlineData: { mimeType: m.mimeType, data: m.data } })),
+          ],
+        },
+      ],
       ...(json ? { generationConfig: { responseMimeType: 'application/json' } } : {}),
     }),
   });

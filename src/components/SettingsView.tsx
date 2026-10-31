@@ -201,7 +201,7 @@ export const SettingsView: React.FC = () => {
         <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-xs text-slate-600">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Target Engine: <strong>Gemma 4</strong> (gemini-4-argon / gemini-3.8-flash)</span>
+            <span>Target Engine: <strong>Gemma 4</strong> (gemma-4-26b-a4b-it)</span>
           </div>
 
           <button
