@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { UserProfile, AppNotification } from '../types/deals';
 import { NotificationsPopover } from './NotificationsPopover';
-import { Search, Bell, Menu, ShieldCheck, ChevronDown, LogOut, RefreshCw, UserCheck } from 'lucide-react';
+import { LANGUAGES, useLanguage } from '../i18n';
+import { Search, Bell, Menu, ShieldCheck, ChevronDown, LogOut, RefreshCw, UserCheck, Languages } from 'lucide-react';
 
 interface PortalHeaderProps {
   userProfile: UserProfile;
@@ -28,6 +29,7 @@ export const PortalHeader: React.FC<PortalHeaderProps> = ({
 }) => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -51,13 +53,30 @@ export const PortalHeader: React.FC<PortalHeaderProps> = ({
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search for challenges, investors or partners..."
+          placeholder={t('search.placeholder')}
           className="w-full rounded-2xl border border-slate-200/80 bg-slate-50/70 pl-10 pr-4 py-2 text-xs font-medium text-slate-700 placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
         />
       </div>
 
       {/* Right Controls: Notification & User Profile */}
       <div className="flex items-center gap-4 sm:gap-6 relative">
+        {/* Language Selector */}
+        <label className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+          <Languages className="h-3.5 w-3.5 text-indigo-600" aria-hidden="true" />
+          <span className="sr-only">{t('language.label')}</span>
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value as typeof language)}
+            className="bg-transparent focus:outline-none cursor-pointer"
+          >
+            {LANGUAGES.map((l) => (
+              <option key={l.code} value={l.code}>
+                {l.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
         {/* Notification Bell */}
         <div className="relative">
           <button

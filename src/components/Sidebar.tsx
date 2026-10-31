@@ -1,5 +1,6 @@
 import React from 'react';
 import { AspLogo } from './BrandLogos';
+import { useLanguage } from '../i18n';
 import { User, Trophy, Handshake, Bell, ShieldCheck, PlusCircle, Settings } from 'lucide-react';
 
 export type MainNavTab = 'profile' | 'challenges' | 'deals' | 'notifications' | 'ekyb' | 'settings';
@@ -21,6 +22,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   challengeCount,
   unreadNotificationCount,
 }) => {
+  const { t } = useLanguage();
+
   return (
     <aside className="w-64 shrink-0 border-r border-slate-100 bg-white min-h-screen p-5 flex flex-col justify-between hidden md:flex">
       <div className="space-y-8">
@@ -41,7 +44,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center gap-3">
               <User className={`h-4 w-4 ${activeTab === 'profile' ? 'text-[#5b21b6]' : 'text-slate-400'}`} />
-              <span className="text-sm">My Profile</span>
+              <span className="text-sm">{t('nav.profile')}</span>
             </div>
             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-100/60 text-indigo-700 font-bold">
               80%
@@ -58,7 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center gap-3">
               <Trophy className={`h-4 w-4 ${activeTab === 'challenges' ? 'text-[#5b21b6]' : 'text-slate-400'}`} />
-              <span className="text-sm">Challenges</span>
+              <span className="text-sm">{t('nav.challenges')}</span>
             </div>
             <span className="text-[11px] font-mono font-bold text-slate-400">
               {challengeCount}
@@ -75,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center gap-3">
               <Handshake className={`h-4 w-4 ${activeTab === 'deals' ? 'text-[#5b21b6]' : 'text-slate-400'}`} />
-              <span className="text-sm">Deal Tracker</span>
+              <span className="text-sm">{t('nav.deals')}</span>
             </div>
             <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">
               {dealCount} active
@@ -93,7 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center gap-3">
               <Bell className={`h-4 w-4 ${activeTab === 'notifications' ? 'text-[#5b21b6]' : 'text-slate-400'}`} />
-              <span className="text-sm">Notifications</span>
+              <span className="text-sm">{t('nav.notifications')}</span>
             </div>
             {unreadNotificationCount > 0 && (
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-rose-500 text-white font-mono text-[11px] font-bold shadow-sm">
@@ -117,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <div className="flex items-center gap-3">
                 <ShieldCheck className={`h-4 w-4 ${activeTab === 'ekyb' ? 'text-[#5b21b6]' : 'text-slate-400'}`} />
-                <span className="text-sm">eKYB Verification</span>
+                <span className="text-sm">{t('nav.ekyb')}</span>
               </div>
               <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold">
                 SSM 100%
@@ -134,7 +137,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <div className="flex items-center gap-3">
                 <Settings className={`h-4 w-4 ${activeTab === 'settings' ? 'text-[#5b21b6]' : 'text-slate-400'}`} />
-                <span className="text-sm">Settings</span>
+                <span className="text-sm">{t('nav.settings')}</span>
               </div>
               <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-bold">
                 Gemini 4
@@ -151,7 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className="w-full flex items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-3 px-4 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all"
         >
           <PlusCircle className="h-4 w-4" />
-          <span>Post Your Solution</span>
+          <span>{t('nav.postSolution')}</span>
         </button>
 
         <div className="p-3 rounded-xl bg-slate-50 text-[11px] text-slate-500 leading-tight">
