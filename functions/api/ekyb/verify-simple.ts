@@ -2,6 +2,15 @@ import { VERIFY_SYSTEM } from '../../_lib/prompts';
 import { Env, InlineMedia, generate, json, readJson, resolveKey } from '../../_lib/gemini';
 
 const DEFAULT_MODEL = 'gemma-4-26b-a4b-it';
+// Each item is scored out of its maxScore; the three maxima add up to 100.
+const ITEMS = [
+  { id: 'ssm', label: 'SSM business registration certificate', maxScore: 30 },
+  { id: 'identity', label: 'Director identification (IC or passport)', maxScore: 30 },
+  { id: 'address', label: 'Address walk-in video', maxScore: 40 },
+];
+// An item passes at 70% of its maximum. The application is approved at 70 of 100 with every item passing.
+const PASS_RATIO = 0.7;
+const APPROVAL_TOTAL = 70;
 
 // Port of POST /api/ekyb/verify-simple. The uploaded documents are sent to
 // Gemini as images, so the verdict is based on the files themselves. There is
@@ -34,6 +43,17 @@ Read the attached files and check them against the company profile above. For an
   try {
     const text = await generate(key, modelToUse, { system: VERIFY_SYSTEM, json: true, prompt, media: documents });
     const parsed = JSON.parse(text);
+    // The server does the scoring: clamp each item, then add up the total.
+    const items = ITEMS.map((item) => {
+      const modelItem = (Array.isArray(parsed.items) ? parsed.items : []).find((i: any) => i?.id === item.id) ?? {};
+      const score = Math.max(0, Math.min(item.maxScore, Math.round(Number(modelItem.score) || 0)));
+      return { ...item, score, passed: score >= item.maxScore * PASS_RATIO, notes: String(modelItem.notes || '') };
+    });
+    const totalScore = items.reduce((sum, item) => sum + item.score, 0);
+    parsed.items = items;
+    parsed.totalScore = totalScore;
+    parsed.maxScore = 100;
+    parsed.isApproved = totalScore >= APPROVAL_TOTAL && items.every((item) => item.passed);
     parsed.modelUsed = modelToUse;
     return json({ success: true, result: parsed });
   } catch (err) {
