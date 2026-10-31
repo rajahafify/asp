@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DEFAULT_KYB_DATA } from '../data/mockSimpleKyb';
+import { DEFAULT_KYB_DATA, EMPTY_KYB_DATA } from '../data/mockSimpleKyb';
 import { KybVerificationState } from '../types/simpleKyb';
 import {
   ShieldCheck,
@@ -23,10 +23,11 @@ import {
 
 interface SimpleEkybViewProps {
   onVerificationComplete?: (state: KybVerificationState) => void;
+  startEmpty?: boolean;
 }
 
-export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationComplete }) => {
-  const [kybState, setKybState] = useState<KybVerificationState>(DEFAULT_KYB_DATA);
+export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationComplete, startEmpty = false }) => {
+  const [kybState, setKybState] = useState<KybVerificationState>(startEmpty ? EMPTY_KYB_DATA : DEFAULT_KYB_DATA);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
