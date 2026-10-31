@@ -101,6 +101,33 @@ export const DEMO_STARTUP_PERSONAS: Record<string, UserProfile> = {
       { id: 'a3', task: 'VietAgri Distribution Channel Agreement', completed: true, points: 35 },
     ],
   },
+  // Empty profile for demoing uploads and Gemini verification from scratch.
+  blank: {
+    name: 'New Founder',
+    title: '',
+    avatarUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=new-startup&backgroundColor=c0aede,d1d4f9,ffd5dc',
+    companyName: '',
+    companyCountry: '',
+    industry: '',
+    stage: '',
+    foundedYear: 0,
+    uenOrRegNumber: '',
+    ekybPassportNumber: '',
+    airsScore: 0,
+    profileCompletionPercent: 0,
+    bio: '',
+    targetAseanMarkets: [],
+    techStack: [],
+    website: '',
+    headquarters: '',
+    checklist: [
+      { id: 'c1', task: 'Complete Basic Company Profile & Headquarters', completed: false, points: 20 },
+      { id: 'c2', task: 'Verify eKYB Passport via SSM Registry', completed: false, points: 30 },
+      { id: 'c3', task: 'Upload Director IC & Walk-In Address Video', completed: false, points: 20 },
+      { id: 'c4', task: 'Submit Jakarta Cross-Border Fleet Proposal', completed: false, points: 15 },
+      { id: 'c5', task: 'Telemetry Hardware Integration Test', completed: false, points: 15 },
+    ],
+  },
 };
 
 export const INITIAL_USER_PROFILE: UserProfile = DEMO_STARTUP_PERSONAS.routesense;

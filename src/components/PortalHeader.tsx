@@ -183,6 +183,22 @@ export const PortalHeader: React.FC<PortalHeaderProps> = ({
                   </div>
                   {userProfile.name === 'AquaSense Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
+
+                <button
+                  onClick={() => {
+                    onSwitchUser('New Founder', '');
+                    setIsUserMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
+                    userProfile.name === 'New Founder' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                  }`}
+                >
+                  <div>
+                    <span className="block">Demo: Empty profile</span>
+                    <span className="text-[10px] text-slate-400 block font-normal">Upload documents and run eKYB from scratch</span>
+                  </div>
+                  {userProfile.name === 'New Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                </button>
               </div>
 
               <div className="pt-1 border-t border-slate-100">
