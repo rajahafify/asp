@@ -1,0 +1,6 @@
+{
+  "name": "ASEAN Startup Passport - Gemma-Powered eKYB Trust Layer",
+  "description": "Cross-border compliance and unified eKYB verification for ASEAN startups powered by Gemma multilingual due diligence, UBO mapping, and enterprise readiness scoring.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
