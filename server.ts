@@ -307,7 +307,7 @@ Address Video Proof: ${JSON.stringify(addressVideo || {})}`;
         extractedData: {
           verifiedCompanyName: companyProfile?.legalName || 'RouteSense AI Sdn Bhd',
           verifiedSsmNumber: companyProfile?.ssmRegistrationNumber || '202301049281 (1519021-M)',
-          verifiedDirector: identification?.fullName || 'FAIZAL HAKIM BIN ISMAIL',
+          verifiedDirector: identification?.fullName || 'AUTHORISED DIRECTOR',
           verifiedAddress: companyProfile?.registeredAddress || 'Unit 12-03, Level 12, Tower B, Vertical Business Suites, Bangsar South, 59200 Kuala Lumpur',
         },
         auditSummary: 'All 3 KYB proofs verified: SSM Statutory filing authenticated, Director IC biometric match passed, and physical premises walk-in video confirmed.',

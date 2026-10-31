@@ -17,7 +17,7 @@ export const DEFAULT_KYB_DATA: KybVerificationState = {
   businessRegistration: {
     docName: 'SSM_Certificate_Section14_202301049281.jpg',
     ssmNumber: '202301049281 (1519021-M)',
-    photoUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80',
+    photoUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=director-ic&backgroundColor=c0aede,d1d4f9,ffd5dc',
     uploadedAt: '2026-10-24 14:32 MYT',
     fileSize: '2.8 MB (High-Res Photo of SSM Certificate)',
     status: 'verified',
@@ -31,14 +31,14 @@ export const DEFAULT_KYB_DATA: KybVerificationState = {
   },
   identification: {
     idType: 'IC',
-    fullName: 'FAIZAL HAKIM BIN ISMAIL',
+    fullName: 'AUTHORISED DIRECTOR',
     idNumber: '920815-14-5391',
     nationality: 'Malaysian',
-    photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80',
+    photoUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=director-passport&backgroundColor=c0aede,d1d4f9,ffd5dc',
     uploadedAt: '2026-10-24 14:35 MYT',
     status: 'verified',
     aiExtracted: {
-      fullName: 'FAIZAL HAKIM BIN ISMAIL',
+      fullName: 'AUTHORISED DIRECTOR',
       idNumber: '920815-14-5391',
       nationality: 'Malaysian Citizen (Co-Founder & CEO)',
       faceMatchScore: 99.6,

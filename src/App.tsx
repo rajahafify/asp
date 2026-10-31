@@ -146,13 +146,16 @@ export default function App() {
   };
 
   const handleSwitchUser = (name: string, company: string) => {
-    if (name.includes('Cheryl') || company.includes('EcoPack')) {
+    if (name === 'New Founder') {
+      setUserProfile(DEMO_STARTUP_PERSONAS.blank);
+      setFocusedDealId('deal-case-1-routesense');
+    } else if (name.includes('EcoPack') || company.includes('EcoPack')) {
       setUserProfile(DEMO_STARTUP_PERSONAS.ecopack);
       setFocusedDealId('deal-case-2-ecopack');
-    } else if (name.includes('Ariff') || company.includes('MedFlow')) {
+    } else if (name.includes('MedFlow') || company.includes('MedFlow')) {
       setUserProfile(DEMO_STARTUP_PERSONAS.medflow);
       setFocusedDealId('deal-case-3-medflow');
-    } else if (name.includes('Somchai') || company.includes('AquaSense')) {
+    } else if (name.includes('AquaSense') || company.includes('AquaSense')) {
       setUserProfile(DEMO_STARTUP_PERSONAS.aquasense);
       setFocusedDealId('deal-case-4-aquasense');
     } else {

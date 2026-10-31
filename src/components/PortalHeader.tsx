@@ -122,66 +122,82 @@ export const PortalHeader: React.FC<PortalHeaderProps> = ({
                 </span>
                 <button
                   onClick={() => {
-                    onSwitchUser('Faizal Hakim', 'RouteSense AI Sdn Bhd (Malaysia)');
+                    onSwitchUser('RouteSense Founder', 'RouteSense AI Sdn Bhd (Malaysia)');
                     setIsUserMenuOpen(false);
                   }}
                   className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
-                    userProfile.name === 'Faizal Hakim' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                    userProfile.name === 'RouteSense Founder' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div>
-                    <span className="block">Case 1: Faizal Hakim</span>
+                    <span className="block">Case 1: RouteSense Founder</span>
                     <span className="text-[10px] text-slate-400 block font-normal">RouteSense AI (Malaysia 🇲🇾)</span>
                   </div>
-                  {userProfile.name === 'Faizal Hakim' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                  {userProfile.name === 'RouteSense Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
 
                 <button
                   onClick={() => {
-                    onSwitchUser('Dr. Cheryl Lim', 'EcoPack Labs Pte Ltd (Singapore)');
+                    onSwitchUser('EcoPack Founder', 'EcoPack Labs Pte Ltd (Singapore)');
                     setIsUserMenuOpen(false);
                   }}
                   className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
-                    userProfile.name === 'Dr. Cheryl Lim' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                    userProfile.name === 'EcoPack Founder' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div>
-                    <span className="block">Case 2: Dr. Cheryl Lim</span>
+                    <span className="block">Case 2: EcoPack Founder</span>
                     <span className="text-[10px] text-slate-400 block font-normal">EcoPack Labs (Singapore 🇸🇬)</span>
                   </div>
-                  {userProfile.name === 'Dr. Cheryl Lim' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                  {userProfile.name === 'EcoPack Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
 
                 <button
                   onClick={() => {
-                    onSwitchUser('Dr. Ariff Rahman', 'MedFlow Technologies Sdn Bhd (Malaysia)');
+                    onSwitchUser('MedFlow Founder', 'MedFlow Technologies Sdn Bhd (Malaysia)');
                     setIsUserMenuOpen(false);
                   }}
                   className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
-                    userProfile.name === 'Dr. Ariff Rahman' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                    userProfile.name === 'MedFlow Founder' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div>
-                    <span className="block">Case 3: Dr. Ariff Rahman</span>
+                    <span className="block">Case 3: MedFlow Founder</span>
                     <span className="text-[10px] text-slate-400 block font-normal">MedFlow Technologies (Malaysia 🇲🇾)</span>
                   </div>
-                  {userProfile.name === 'Dr. Ariff Rahman' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                  {userProfile.name === 'MedFlow Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
 
                 <button
                   onClick={() => {
-                    onSwitchUser('Somchai Prasert', 'AquaSense Innovations Co., Ltd. (Thailand)');
+                    onSwitchUser('AquaSense Founder', 'AquaSense Innovations Co., Ltd. (Thailand)');
                     setIsUserMenuOpen(false);
                   }}
                   className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
-                    userProfile.name === 'Somchai Prasert' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                    userProfile.name === 'AquaSense Founder' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
                   }`}
                 >
                   <div>
-                    <span className="block">Case 4: Somchai Prasert</span>
+                    <span className="block">Case 4: AquaSense Founder</span>
                     <span className="text-[10px] text-slate-400 block font-normal">AquaSense Innovations (Thailand 🇹🇭)</span>
                   </div>
-                  {userProfile.name === 'Somchai Prasert' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                  {userProfile.name === 'AquaSense Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
+                </button>
+
+                <button
+                  onClick={() => {
+                    onSwitchUser('New Founder', '');
+                    setIsUserMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-slate-700 flex items-center justify-between ${
+                    userProfile.name === 'New Founder' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'
+                  }`}
+                >
+                  <div>
+                    <span className="block">Demo: Empty profile</span>
+                    <span className="text-[10px] text-slate-400 block font-normal">Upload documents and run eKYB from scratch</span>
+                  </div>
+                  {userProfile.name === 'New Founder' && <span className="text-[10px] text-indigo-600 font-bold">Active</span>}
                 </button>
               </div>
 
