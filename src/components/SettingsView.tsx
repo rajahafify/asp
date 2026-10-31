@@ -79,7 +79,7 @@ export const SettingsView: React.FC = () => {
           ...(activeKey ? { 'x-gemini-api-key': activeKey } : {}),
         },
         body: JSON.stringify({
-          model: selectedModel === 'gemma-4' ? 'gemini-4-argon' : selectedModel,
+          model: selectedModel === 'gemma-4' ? 'gemma-4-26b-a4b-it' : selectedModel,
           apiKey: activeKey,
         }),
       });
@@ -288,7 +288,7 @@ export const SettingsView: React.FC = () => {
               {selectedModel === 'gemma-4' && <Check className="h-4 w-4 text-indigo-600" />}
             </div>
             <span className="text-[11px] font-mono font-bold text-indigo-600 block mb-1">
-              gemma-4 / gemini-4-argon
+              gemma-4-26b-a4b-it
             </span>
             <p className="text-xs text-slate-500 leading-relaxed">
               Google Gemma high-reasoning legal engine optimized for cross-border ASEAN regulatory registries (SSM, ACRA, AHU, DBD, ERC), director IC biometric checks, and premises video liveness.
