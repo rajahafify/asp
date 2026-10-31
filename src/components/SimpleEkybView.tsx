@@ -22,6 +22,15 @@ import {
   Save
 } from 'lucide-react';
 
+interface VerificationItem {
+  id: string;
+  label: string;
+  maxScore: number;
+  score: number;
+  passed: boolean;
+  notes: string;
+}
+
 interface SimpleEkybViewProps {
   onVerificationComplete?: (state: KybVerificationState) => void;
   startEmpty?: boolean;
@@ -32,6 +41,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
   const [kybState, setKybState] = useState<KybVerificationState>(startEmpty ? EMPTY_KYB_DATA : DEFAULT_KYB_DATA);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
+  const [verificationItems, setVerificationItems] = useState<VerificationItem[]>([]);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const ssmInputRef = useRef<HTMLInputElement>(null);
   const identificationInputRef = useRef<HTMLInputElement>(null);
@@ -159,6 +169,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
   const handleRunAiVerification = async () => {
     setIsVerifying(true);
     setVerificationFeedback(null);
+    setVerificationItems([]);
 
     const activeKey = localStorage.getItem('asp_demo_gemini_api_key') || '';
     const savedModel = localStorage.getItem('asp_preferred_model') || 'gemma-4';
@@ -221,14 +232,15 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
           modelUsed: result.modelUsed || 'Gemma 4 (Multilingual Regulatory Engine)',
           auditRemarks: [
             result.auditSummary || 'All 3 KYB proofs verified successfully.',
-            `Confidence score: ${result.confidenceScore || 99.2}%`,
+            `Total score: ${result.totalScore ?? 0}/100 (approval at 70, every item must pass)`,
             `Risk assessment rating: ${result.riskRating || 'LOW'}`,
           ],
         }));
+        setVerificationItems(result.items ?? []);
         setVerificationFeedback(
           result.isApproved
-            ? `Verified by ${result.modelUsed || 'Gemma 4'}: documents checked against the company profile.`
-            : `Not approved by ${result.modelUsed || 'Gemma 4'}. See the audit remarks below.`,
+            ? `Verified by ${result.modelUsed || 'Gemma 4'}: ${result.totalScore}/100.`
+            : `Not approved by ${result.modelUsed || 'Gemma 4'}: ${result.totalScore}/100. See the item scores below.`,
         );
         if (onVerificationComplete) {
           onVerificationComplete(kybState);
@@ -277,6 +289,35 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
           )}
         </button>
       </div>
+
+      {/* Per-item verification scores, out of 100 in total */}
+      {verificationItems.length > 0 && (
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-900">Verification score</span>
+            <span className="font-mono text-xs font-bold text-indigo-700">
+              {verificationItems.reduce((sum, item) => sum + item.score, 0)}/100
+            </span>
+          </div>
+          {verificationItems.map((item) => (
+            <div key={item.id} className="space-y-1">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold text-slate-800">{item.label}</span>
+                <span className={`font-mono font-bold ${item.passed ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  {item.score}/{item.maxScore} {item.passed ? 'Passed' : 'Failed'}
+                </span>
+              </div>
+              <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={`h-full ${item.passed ? 'bg-emerald-500' : 'bg-rose-500'}`}
+                  style={{ width: `${(item.score / item.maxScore) * 100}%` }}
+                />
+              </div>
+              {item.notes && <p className="text-[11px] text-slate-500">{item.notes}</p>}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Verification Feedback Banner */}
       {verificationFeedback && (

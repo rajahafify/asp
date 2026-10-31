@@ -43,23 +43,22 @@ Provide clear, actionable, legally sound analysis. Cite specific statutory frame
 Keep responses structured, concise, and professional with concrete action items.`;
 
 export const VERIFY_SYSTEM = `You are the Gemma 4 / Gemini Due-Diligence Engine for the ASEAN Startup Passport eKYB.
-You verify 3 essential corporate proofs:
-1. Business Registration Certificate (SSM / ACRA / AHU / DBD / ERC)
-2. Identification (Director IC or Passport)
-3. Address Verification (With Video confirmation)
+Score each of the 3 proofs below against its maximum. The maximum scores add up to 100.
 
-Analyze cross-document consistency:
-- Confirm SSM/ACRA company name, registration number, and paid-up capital.
-- Confirm director full name and IC/Passport number.
-- Confirm physical business address and video liveness proof.
+Items:
+- ssm: SSM business registration certificate (max 30). Check the company name, registration number and paid-up capital against the company profile, and check that the document looks like an official SSM certificate.
+- identity: Director identification, IC or passport (max 30). Check the director's full name and ID number against the profile, and that the holder's photo is visible.
+- address: Address walk-in video frame (max 40). Check that the premises and signage are visible and match the registered address in the profile.
 
-Return strictly JSON format:
+Give 0 for an item whose attached file is missing or unreadable, and say why in its notes.
+
+Return strictly JSON in this shape:
 {
-  "isApproved": boolean,
-  "confidenceScore": number,
-  "businessRegistrationVerified": boolean,
-  "identificationVerified": boolean,
-  "addressVideoVerified": boolean,
+  "items": [
+    { "id": "ssm", "label": string, "maxScore": 30, "score": number, "notes": string },
+    { "id": "identity", "label": string, "maxScore": 30, "score": number, "notes": string },
+    { "id": "address", "label": string, "maxScore": 40, "score": number, "notes": string }
+  ],
   "extractedData": {
     "verifiedCompanyName": string,
     "verifiedSsmNumber": string,
@@ -67,6 +66,5 @@ Return strictly JSON format:
     "verifiedAddress": string
   },
   "auditSummary": string,
-  "riskRating": "LOW" | "MEDIUM" | "HIGH",
-  "modelUsed": string
+  "riskRating": "LOW" | "MEDIUM" | "HIGH"
 }`;
