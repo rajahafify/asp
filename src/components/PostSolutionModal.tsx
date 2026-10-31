@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { CorporateChallenge, Deal } from '../types/deals';
 import { UserProfile } from '../types/deals';
 import { ShieldCheck, Sparkles, Send, X, CheckCircle2, Building, DollarSign } from 'lucide-react';
@@ -20,6 +21,7 @@ export const PostSolutionModal: React.FC<PostSolutionModalProps> = ({
   userProfile,
   onSubmitSolution,
 }) => {
+  const { t } = useLanguage();
   const [selectedChallengeId, setSelectedChallengeId] = useState<string>(
     initialChallenge?.id || (challenges[0]?.id ?? '')
   );
@@ -96,7 +98,7 @@ export const PostSolutionModal: React.FC<PostSolutionModalProps> = ({
 
         <div className="flex items-center gap-2 text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">
           <Sparkles className="h-4 w-4" />
-          <span>Step 3 & 4: Solution Proposal & eKYB Gate</span>
+          <span>{t('Step 3 & 4: Solution Proposal & eKYB Gate')}</span>
         </div>
         <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
           Post Your Business Solution
@@ -134,7 +136,7 @@ export const PostSolutionModal: React.FC<PostSolutionModalProps> = ({
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Autonomous AI Logistics Batching & Real-Time Carbon Telematics"
+              placeholder={t('e.g. Autonomous AI Logistics Batching & Real-Time Carbon Telematics')}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
             />
           </div>
@@ -176,7 +178,7 @@ export const PostSolutionModal: React.FC<PostSolutionModalProps> = ({
                 type="text"
                 value={timeline}
                 onChange={(e) => setTimeline(e.target.value)}
-                placeholder="e.g. 8-week pilot + 6-month scale"
+                placeholder={t('e.g. 8-week pilot + 6-month scale')}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-800 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
               />
             </div>
@@ -196,7 +198,7 @@ export const PostSolutionModal: React.FC<PostSolutionModalProps> = ({
                 <div>
                   <label htmlFor="attach-ekyb" className="text-xs font-bold text-slate-900 cursor-pointer flex items-center gap-1.5">
                     <ShieldCheck className="h-4 w-4 text-indigo-600" />
-                    <span>Attach Verified ASEAN Startup Passport (eKYB)</span>
+                    <span>{t('Attach Verified ASEAN Startup Passport (eKYB)')}</span>
                   </label>
                   <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
                     Automatically certifies UEN: {userProfile.uenOrRegNumber}, AIRS Score: {userProfile.airsScore}/1000, and unrolled natural person UBOs. Pre-clears compliance checks for enterprise buyers!
@@ -223,7 +225,7 @@ export const PostSolutionModal: React.FC<PostSolutionModalProps> = ({
               className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all"
             >
               <Send className="h-3.5 w-3.5" />
-              <span>Post Solution & Track Deal</span>
+              <span>{t('Post Solution & Track Deal')}</span>
             </button>
           </div>
         </form>

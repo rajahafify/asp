@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier, RegistryExtractionResult } from '../types/ekyb';
 import { ASEAN_REGISTRIES } from '../data/mockDossiers';
 import {
@@ -22,6 +23,7 @@ interface GemmaExtractionViewProps {
 }
 
 export const GemmaExtractionView: React.FC<GemmaExtractionViewProps> = ({ dossier }) => {
+  const { t } = useLanguage();
   const [selectedDocIndex, setSelectedDocIndex] = useState(0);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [customText, setCustomText] = useState('');
@@ -146,11 +148,11 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-            <span className="font-semibold text-cyan-400 uppercase tracking-wider">Multilingual eKYB</span>
+            <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('Multilingual eKYB')}</span>
             <span>·</span>
-            <span>Gemma 2 9B / PaliGemma Layout Parser</span>
+            <span>{t('Gemma 2 9B / PaliGemma Layout Parser')}</span>
             <span>·</span>
-            <span>Cross-Lingual NER</span>
+            <span>{t('Cross-Lingual NER')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Registry Ingestion & Parsing Engine
@@ -239,12 +241,12 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
             {isAnalyzing ? (
               <>
                 <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                <span>Gemma Parsing...</span>
+                <span>{t('Gemma Parsing...')}</span>
               </>
             ) : (
               <>
                 <Cpu className="h-3.5 w-3.5" />
-                <span>Re-Run Gemma Inference</span>
+                <span>{t('Re-Run Gemma Inference')}</span>
               </>
             )}
           </button>
@@ -299,7 +301,7 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
                 rows={16}
-                placeholder="Paste corporate registry document, notary deed, or tax receipt..."
+                placeholder={t('Paste corporate registry document, notary deed, or tax receipt...')}
                 className="w-full rounded-lg border border-slate-800 bg-slate-900/90 p-3 font-mono text-xs text-slate-200 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
               />
               <button
@@ -310,12 +312,12 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
                 {isAnalyzing ? (
                   <>
                     <RefreshCw className="h-4 w-4 animate-spin" />
-                    <span>Parsing Document via Multilingual Gemma...</span>
+                    <span>{t('Parsing Document via Multilingual Gemma...')}</span>
                   </>
                 ) : (
                   <>
                     <Send className="h-4 w-4" />
-                    <span>Extract & Reconcile via Gemma</span>
+                    <span>{t('Extract & Reconcile via Gemma')}</span>
                   </>
                 )}
               </button>
@@ -366,7 +368,7 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
 
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800/80 text-xs">
               <div>
-                <span className="text-slate-400 text-[11px] block">Registration Number</span>
+                <span className="text-slate-400 text-[11px] block">{t('Registration Number')}</span>
                 <span className="font-mono text-slate-200 font-semibold">{extractionToDisplay.registrationNumber}</span>
               </div>
               <div>
@@ -374,7 +376,7 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
                 <span className="font-mono text-slate-200">{extractionToDisplay.incorporationDate}</span>
               </div>
               <div className="col-span-2">
-                <span className="text-slate-400 text-[11px] block">Registered Office</span>
+                <span className="text-slate-400 text-[11px] block">{t('Registered Office')}</span>
                 <span className="text-slate-300">{extractionToDisplay.registeredAddress}</span>
               </div>
             </div>
@@ -387,7 +389,7 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
                 <Coins className="h-3.5 w-3.5 text-cyan-400" />
                 Capital Reconciliation Audit
               </span>
-              <span className="text-xs font-mono text-emerald-400">Reconciled</span>
+              <span className="text-xs font-mono text-emerald-400">{t('Reconciled')}</span>
             </div>
             <div className="flex items-baseline justify-between pt-1">
               <span className="text-sm font-semibold text-white font-mono">
@@ -465,7 +467,7 @@ DATA COMPLIANCE: MALAYSIA PDPA 2010 SECTION 129 TRANSBORDER DATA FLOW AUDITED.`,
                         </p>
                         {flag.remediationAction && (
                           <div className="mt-1.5 text-[10px] text-cyan-300 flex items-center gap-1 font-mono">
-                            <span>Remediation:</span>
+                            <span>{t('Remediation:')}</span>
                             <span>{flag.remediationAction}</span>
                           </div>
                         )}

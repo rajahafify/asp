@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { Deal } from '../types/deals';
 import { CorporateLogoBadge } from './BrandLogos';
 import { Trophy, CheckCircle2, ShieldCheck, ArrowRight, X, Sparkles, Globe2, Handshake } from 'lucide-react';
@@ -16,6 +17,7 @@ export const DealClosedCelebrationModal: React.FC<DealClosedCelebrationModalProp
   onClose,
   onViewDeal,
 }) => {
+  const { t } = useLanguage();
   if (!isOpen || !deal) return null;
 
   const isInvestment = deal.dealType === 'investment';
@@ -94,13 +96,13 @@ export const DealClosedCelebrationModal: React.FC<DealClosedCelebrationModalProp
 
           <div className="pt-3 border-t border-slate-200/80 grid grid-cols-2 gap-2 text-xs">
             <div className="p-2.5 rounded-xl bg-white border border-slate-100">
-              <span className="text-slate-400 block text-[10px]">Outcome Type</span>
+              <span className="text-slate-400 block text-[10px]">{t('Outcome Type')}</span>
               <span className="font-bold text-slate-800 text-[11px] block mt-0.5">
                 {deal.recommendedOutcome}
               </span>
             </div>
             <div className="p-2.5 rounded-xl bg-white border border-slate-100">
-              <span className="text-slate-400 block text-[10px]">Cross-Border Corridor</span>
+              <span className="text-slate-400 block text-[10px]">{t('Cross-Border Corridor')}</span>
               <span className="font-bold text-slate-800 text-[11px] block mt-0.5">
                 {deal.startupCountry} → {deal.corporateCountry}
               </span>
@@ -116,7 +118,7 @@ export const DealClosedCelebrationModal: React.FC<DealClosedCelebrationModalProp
             </div>
             <div className="flex items-center gap-1.5 text-indigo-700 font-semibold">
               <ShieldCheck className="h-4 w-4 text-indigo-600 shrink-0" />
-              <span>Gemma 4 eKYB Cleared</span>
+              <span>{t('Gemma 4 eKYB Cleared')}</span>
             </div>
           </div>
         </div>
@@ -130,7 +132,7 @@ export const DealClosedCelebrationModal: React.FC<DealClosedCelebrationModalProp
             }}
             className="w-full flex items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3 px-5 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-700 active:scale-95 transition-all"
           >
-            <span>View Deal Journey in Tracker</span>
+            <span>{t('View Deal Journey in Tracker')}</span>
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>

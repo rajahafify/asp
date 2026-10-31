@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier } from '../types/ekyb';
 import {
   MessageSquareCode,
@@ -24,6 +25,7 @@ interface ChatMessage {
 }
 
 export const DiligenceCopilot: React.FC<DiligenceCopilotProps> = ({ dossier }) => {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'init-1',
@@ -105,11 +107,11 @@ export const DiligenceCopilot: React.FC<DiligenceCopilotProps> = ({ dossier }) =
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-            <span className="font-semibold text-cyan-400 uppercase tracking-wider">AI Diligence Copilot</span>
+            <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('AI Diligence Copilot')}</span>
             <span>·</span>
-            <span>Gemma 2 9B On-Prem Legal Reasoner</span>
+            <span>{t('Gemma 2 9B On-Prem Legal Reasoner')}</span>
             <span>·</span>
-            <span>Cross-Border Diligence Q&A</span>
+            <span>{t('Cross-Border Diligence Q&A')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Multilingual Due-Diligence Copilot
@@ -188,7 +190,7 @@ export const DiligenceCopilot: React.FC<DiligenceCopilotProps> = ({ dossier }) =
                 <RefreshCw className="h-4 w-4 animate-spin" />
               </div>
               <div className="rounded-2xl rounded-bl-none bg-slate-900 border border-slate-800 px-4 py-3 text-xs text-slate-400 flex items-center gap-2">
-                <span>Gemma is analyzing corporate filings & statutory frameworks...</span>
+                <span>{t('Gemma is analyzing corporate filings & statutory frameworks...')}</span>
               </div>
             </div>
           )}
@@ -218,7 +220,7 @@ export const DiligenceCopilot: React.FC<DiligenceCopilotProps> = ({ dossier }) =
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 text-white text-xs font-semibold transition-all shrink-0 active:scale-95"
             >
               <Send className="h-4 w-4" />
-              <span>Ask Agent</span>
+              <span>{t('Ask Agent')}</span>
             </button>
           </form>
         </div>

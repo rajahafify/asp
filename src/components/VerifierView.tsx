@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier } from '../types/ekyb';
 import {
   ShieldCheck,
@@ -20,6 +21,7 @@ interface VerifierViewProps {
 }
 
 export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) => {
+  const { t } = useLanguage();
   const [credentialInput, setCredentialInput] = useState<string>(
     currentDossier.passport.rawVCJson || JSON.stringify(currentDossier.passport, null, 2)
   );
@@ -79,9 +81,9 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-            <span className="font-semibold text-cyan-400 uppercase tracking-wider">Enterprise Verifier Portal</span>
+            <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('Enterprise Verifier Portal')}</span>
             <span>·</span>
-            <span>Zero-Knowledge eKYB Verification</span>
+            <span>{t('Zero-Knowledge eKYB Verification')}</span>
             <span>·</span>
             <span>DBS · Maybank · Mandiri · VCs</span>
           </div>
@@ -110,7 +112,7 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
               <FileSearch className="h-4 w-4 text-cyan-400" />
               Verifiable Credential Payload (JSON-LD / VC)
             </span>
-            <span className="text-[11px] font-mono text-slate-400">W3C Compliant</span>
+            <span className="text-[11px] font-mono text-slate-400">{t('W3C Compliant')}</span>
           </div>
 
           <textarea
@@ -128,12 +130,12 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
             {isVerifying ? (
               <>
                 <RefreshCw className="h-4 w-4 animate-spin" />
-                <span>Verifying Cryptographic Signatures on DEFA Trust Registry...</span>
+                <span>{t('Verifying Cryptographic Signatures on DEFA Trust Registry...')}</span>
               </>
             ) : (
               <>
                 <ShieldCheck className="h-4 w-4" />
-                <span>Verify Credential Authenticity</span>
+                <span>{t('Verify Credential Authenticity')}</span>
               </>
             )}
           </button>
@@ -172,30 +174,30 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
               {/* Verified Details Grid */}
               <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 space-y-3 text-xs">
                 <div className="flex justify-between border-b border-slate-800/80 pb-2">
-                  <span className="text-slate-400">Credential Subject:</span>
+                  <span className="text-slate-400">{t('Credential Subject:')}</span>
                   <span className="font-semibold text-white font-mono">{currentDossier.extraction.companyName}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-800/80 pb-2">
-                  <span className="text-slate-400">Registry Source:</span>
+                  <span className="text-slate-400">{t('Registry Source:')}</span>
                   <span className="text-slate-200">{currentDossier.extraction.registrySource}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-800/80 pb-2">
-                  <span className="text-slate-400">Enterprise Readiness (AIRS):</span>
+                  <span className="text-slate-400">{t('Enterprise Readiness (AIRS):')}</span>
                   <span className="font-bold text-emerald-400 font-mono">
                     {currentDossier.airs.totalScore} / 1000 ({currentDossier.airs.tier.replace('_', ' ')})
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-slate-800/80 pb-2">
-                  <span className="text-slate-400">Data Sovereignty:</span>
+                  <span className="text-slate-400">{t('Data Sovereignty:')}</span>
                   <span className="text-cyan-300 font-mono">{currentDossier.passport.dataLocalizationStatus}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-800/80 pb-2">
-                  <span className="text-slate-400">Sanction Lists Status:</span>
+                  <span className="text-slate-400">{t('Sanction Lists Status:')}</span>
                   <span className="text-emerald-400 font-mono">100% Cleared (OFAC / MAS / BNM)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Revocation Registry:</span>
-                  <span className="text-emerald-400 font-mono">Status: ACTIVE (Not Revoked)</span>
+                  <span className="text-slate-400">{t('Revocation Registry:')}</span>
+                  <span className="text-emerald-400 font-mono">{t('Status: ACTIVE (Not Revoked)')}</span>
                 </div>
               </div>
 
@@ -220,13 +222,13 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
                 </div>
 
                 <div className="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between">
-                  <span className="text-[10px] text-slate-500">ECDSA ES256 Signature Proof</span>
+                  <span className="text-[10px] text-slate-500">{t('ECDSA ES256 Signature Proof')}</span>
                   <button
                     onClick={handleCopyProof}
                     className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
                   >
                     {copied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
-                    <span>Copy Proof</span>
+                    <span>{t('Copy Proof')}</span>
                   </button>
                 </div>
               </div>
@@ -234,7 +236,7 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
               {/* Fast-Track Actions for Enterprise Buyers */}
               <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-900/60 flex items-center justify-between">
                 <div>
-                  <h4 className="text-xs font-semibold text-white">Pre-Approved for Corporate Banking</h4>
+                  <h4 className="text-xs font-semibold text-white">{t('Pre-Approved for Corporate Banking')}</h4>
                   <p className="text-[11px] text-slate-400">
                     Bypasses manual certified true copy notarization at regional bank branches.
                   </p>
@@ -248,7 +250,7 @@ export const VerifierView: React.FC<VerifierViewProps> = ({ currentDossier }) =>
             <div className="rounded-xl border border-rose-500/30 bg-rose-950/20 p-5 text-rose-200 space-y-2">
               <div className="flex items-center gap-2">
                 <XCircle className="h-5 w-5 text-rose-400" />
-                <h3 className="font-bold text-white text-sm">Verification Failed</h3>
+                <h3 className="font-bold text-white text-sm">{t('Verification Failed')}</h3>
               </div>
               <p className="text-xs text-rose-300">
                 {verificationResult?.error || 'Invalid signature or unrecognized issuer DID.'}
