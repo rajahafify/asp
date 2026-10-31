@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier } from '../types/ekyb';
 import { ASEAN_REGISTRIES } from '../data/mockDossiers';
 import {
@@ -28,6 +29,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
   onOpenJsonModal,
   onNavigateToTab,
 }) => {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
   const registry = ASEAN_REGISTRIES[dossier.country];
   const { passport, airs, extraction } = dossier;
@@ -58,11 +60,11 @@ export const PassportView: React.FC<PassportViewProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-            <span className="font-semibold text-cyan-400 uppercase tracking-wider">ASEAN Trust Network</span>
+            <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('ASEAN Trust Network')}</span>
             <span>·</span>
             <span>W3C Verifiable Credential v1.1</span>
             <span>·</span>
-            <span>Gemma eKYB Audit Standard</span>
+            <span>{t('Gemma eKYB Audit Standard')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Digital Startup Passport
@@ -85,7 +87,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
             className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-900 bg-cyan-400 hover:bg-cyan-300 rounded-lg shadow-sm transition-all active:scale-95"
           >
             <FileCheck2 className="h-3.5 w-3.5" />
-            <span>Export Credential</span>
+            <span>{t('Export Credential')}</span>
           </button>
         </div>
       </div>
@@ -195,7 +197,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   onClick={() => onNavigateToTab('ubo')}
                   className="text-xs text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1"
                 >
-                  <span>View Full Cap Table</span>
+                  <span>{t('View Full Cap Table')}</span>
                   <ArrowRight className="h-3 w-3" />
                 </button>
               </div>
@@ -203,7 +205,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
                 {passport.ultimateBeneficialOwners.map((ubo, idx) => (
                   <li key={idx} className="flex items-center justify-between border-b border-slate-800/60 py-1 last:border-none">
                     <span className="font-medium text-white">{ubo}</span>
-                    <span className="font-mono text-[11px] text-emerald-400">Sanctions Cleared</span>
+                    <span className="font-mono text-[11px] text-emerald-400">{t('Sanctions Cleared')}</span>
                   </li>
                 ))}
               </ul>
@@ -215,7 +217,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
                 <Lock className="h-4 w-4 text-cyan-400" />
                 <div>
                   <span className="font-semibold text-slate-200">Data Sovereignty Status: </span>
-                  <span className="text-emerald-400 font-medium">Local In-Region VPC Verified</span>
+                  <span className="text-emerald-400 font-medium">{t('Local In-Region VPC Verified')}</span>
                 </div>
               </div>
               <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
@@ -251,7 +253,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
               <div className="space-y-2 mt-4 text-xs font-mono">
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Governance & UBO</span>
+                    <span>{t('Governance & UBO')}</span>
                     <span className="text-slate-200">{airs.pillars.governanceAndUbo.score}/300</span>
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
@@ -264,7 +266,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Financial Auditability</span>
+                    <span>{t('Financial Auditability')}</span>
                     <span className="text-slate-200">{airs.pillars.financialAuditability.score}/300</span>
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
@@ -277,7 +279,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>Cross-Border Compliance</span>
+                    <span>{t('Cross-Border Compliance')}</span>
                     <span className="text-slate-200">{airs.pillars.crossBorderRegulatoryAndData.score}/250</span>
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
@@ -290,7 +292,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
 
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                    <span>ESG & Legitimacy</span>
+                    <span>{t('ESG & Legitimacy')}</span>
                     <span className="text-slate-200">{airs.pillars.esgAndOperationalLegitimacy.score}/150</span>
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
@@ -310,14 +312,14 @@ export const PassportView: React.FC<PassportViewProps> = ({
                   <QrCode className="h-8 w-8" />
                 </div>
                 <div className="text-[10px] text-slate-400">
-                  <span className="block font-semibold text-slate-200">Zero-Knowledge Proof</span>
-                  <span className="font-mono text-cyan-400">ES256 ECDSA Signed</span>
+                  <span className="block font-semibold text-slate-200">{t('Zero-Knowledge Proof')}</span>
+                  <span className="font-mono text-cyan-400">{t('ES256 ECDSA Signed')}</span>
                 </div>
               </div>
 
               <button
                 onClick={handleCopyDid}
-                title="Copy Decentralized Identifier (DID)"
+                title={t('Copy Decentralized Identifier (DID)')}
                 className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
               >
                 {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
@@ -333,7 +335,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
             <span className="truncate">{passport.did}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span>Merkle Leaf:</span>
+            <span>{t('Merkle Leaf:')}</span>
             <span className="text-slate-400">{passport.proof.merkleRootHash.slice(0, 16)}...</span>
           </div>
         </div>
@@ -388,7 +390,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
             </div>
             <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-cyan-400 transition-colors" />
           </div>
-          <h4 className="font-semibold text-white text-sm">Gemma Multilingual Extraction</h4>
+          <h4 className="font-semibold text-white text-sm">{t('Gemma Multilingual Extraction')}</h4>
           <p className="mt-1 text-xs text-slate-400 leading-relaxed">
             Inspect raw multilingual legal filings (Thai, Vietnamese, Bahasa, English) side-by-side with Gemma's normalized JSON entity resolution.
           </p>
@@ -404,7 +406,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
             </div>
             <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-cyan-400 transition-colors" />
           </div>
-          <h4 className="font-semibold text-white text-sm">Beneficial Ownership (UBO) Graph</h4>
+          <h4 className="font-semibold text-white text-sm">{t('Beneficial Ownership (UBO) Graph')}</h4>
           <p className="mt-1 text-xs text-slate-400 leading-relaxed">
             Explore the multi-tier corporate shareholding tree unrolled to ultimate natural person controllers with real-time sanctions screening.
           </p>
@@ -420,7 +422,7 @@ export const PassportView: React.FC<PassportViewProps> = ({
             </div>
             <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-cyan-400 transition-colors" />
           </div>
-          <h4 className="font-semibold text-white text-sm">AIRS Score Simulator</h4>
+          <h4 className="font-semibold text-white text-sm">{t('AIRS Score Simulator')}</h4>
           <p className="mt-1 text-xs text-slate-400 leading-relaxed">
             Simulate how remediating IP assignment contracts, tax reconciliations, or local VPC hosting raises your enterprise readiness score.
           </p>

@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useLanguage } from '../i18n';
 import { DEFAULT_KYB_DATA, EMPTY_KYB_DATA } from '../data/mockSimpleKyb';
 import { KybVerificationState } from '../types/simpleKyb';
 import {
@@ -27,6 +28,7 @@ interface SimpleEkybViewProps {
 }
 
 export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationComplete, startEmpty = false }) => {
+  const { t } = useLanguage();
   const [kybState, setKybState] = useState<KybVerificationState>(startEmpty ? EMPTY_KYB_DATA : DEFAULT_KYB_DATA);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
@@ -247,7 +249,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">
             <ShieldCheck className="h-4 w-4" />
-            <span>eKYB Trust Verification</span>
+            <span>{t('eKYB Trust Verification')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             eKYB Business Verification
@@ -265,12 +267,12 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
           {isVerifying ? (
             <>
               <RefreshCw className="h-4 w-4 animate-spin" />
-              <span>Verifying with Gemma 4...</span>
+              <span>{t('Verifying with Gemma 4...')}</span>
             </>
           ) : (
             <>
               <Sparkles className="h-4 w-4" />
-              <span>Run Gemma 4 Verification</span>
+              <span>{t('Run Gemma 4 Verification')}</span>
             </>
           )}
         </button>
@@ -330,12 +332,12 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
             {isEditingProfile ? (
               <>
                 <Save className="h-3.5 w-3.5 text-indigo-600" />
-                <span>Save Profile</span>
+                <span>{t('Save Profile')}</span>
               </>
             ) : (
               <>
                 <Edit3 className="h-3.5 w-3.5 text-slate-500" />
-                <span>Edit Profile</span>
+                <span>{t('Edit Profile')}</span>
               </>
             )}
           </button>
@@ -344,7 +346,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
         {isEditingProfile ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div>
-              <label className="block text-slate-500 font-bold mb-1">Company Legal Name</label>
+              <label className="block text-slate-500 font-bold mb-1">{t('Company Legal Name')}</label>
               <input
                 type="text"
                 value={companyName}
@@ -353,7 +355,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               />
             </div>
             <div>
-              <label className="block text-slate-500 font-bold mb-1">SSM Registration Number</label>
+              <label className="block text-slate-500 font-bold mb-1">{t('SSM Registration Number')}</label>
               <input
                 type="text"
                 value={ssmNumber}
@@ -362,7 +364,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-slate-500 font-bold mb-1">Registered Address</label>
+              <label className="block text-slate-500 font-bold mb-1">{t('Registered Address')}</label>
               <input
                 type="text"
                 value={registeredAddress}
@@ -371,7 +373,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               />
             </div>
             <div>
-              <label className="block text-slate-500 font-bold mb-1">Paid-Up Capital</label>
+              <label className="block text-slate-500 font-bold mb-1">{t('Paid-Up Capital')}</label>
               <input
                 type="text"
                 value={paidUpCapital}
@@ -380,7 +382,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               />
             </div>
             <div>
-              <label className="block text-slate-500 font-bold mb-1">Incorporation Date</label>
+              <label className="block text-slate-500 font-bold mb-1">{t('Incorporation Date')}</label>
               <input
                 type="text"
                 value={incorporationDate}
@@ -392,7 +394,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
             <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100">
-              <span className="text-slate-400 block text-[11px]">Company Name</span>
+              <span className="text-slate-400 block text-[11px]">{t('Company Name')}</span>
               <span className="font-bold text-slate-900 block mt-0.5 text-sm">
                 {kybState.companyProfile.legalName}
               </span>
@@ -400,7 +402,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
             </div>
 
             <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100">
-              <span className="text-slate-400 block text-[11px]">Registration (SSM) Number</span>
+              <span className="text-slate-400 block text-[11px]">{t('Registration (SSM) Number')}</span>
               <span className="font-bold text-slate-900 block mt-0.5 font-mono text-sm">
                 {kybState.companyProfile.ssmRegistrationNumber}
               </span>
@@ -408,7 +410,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
             </div>
 
             <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100">
-              <span className="text-slate-400 block text-[11px]">Country & Paid-Up Capital</span>
+              <span className="text-slate-400 block text-[11px]">{t('Country & Paid-Up Capital')}</span>
               <span className="font-bold text-slate-900 block mt-0.5 text-sm">
                 {kybState.companyProfile.countryFlag} {kybState.companyProfile.country}
               </span>
@@ -418,7 +420,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
             </div>
 
             <div className="sm:col-span-2 lg:col-span-3 p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100">
-              <span className="text-slate-400 block text-[11px]">Registered Office Address</span>
+              <span className="text-slate-400 block text-[11px]">{t('Registered Office Address')}</span>
               <span className="font-semibold text-slate-800 block mt-0.5">
                 {kybState.companyProfile.registeredAddress}
               </span>
@@ -451,8 +453,8 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
                     <FileText className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Proof 1</span>
-                    <h3 className="text-sm font-bold text-slate-900">Business Registration Certificate</h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('Proof 1')}</span>
+                    <h3 className="text-sm font-bold text-slate-900">{t('Business Registration Certificate')}</h3>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
@@ -482,15 +484,15 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               {/* AI Extraction Data */}
               <div className="rounded-2xl bg-slate-50 p-3.5 border border-slate-100 text-xs space-y-1.5 font-mono">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">SSM No:</span>
+                  <span className="text-slate-400">{t('SSM No:')}</span>
                   <span className="font-bold text-slate-900">{kybState.businessRegistration.aiExtracted.verifiedSsmNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Paid Capital:</span>
+                  <span className="text-slate-400">{t('Paid Capital:')}</span>
                   <span className="text-slate-700">{kybState.businessRegistration.aiExtracted.paidUpCapital}</span>
                 </div>
                 <div className="flex justify-between text-emerald-600 font-bold">
-                  <span>SSM Seal Authenticity:</span>
+                  <span>{t('SSM Seal Authenticity:')}</span>
                   <span>100% Matched</span>
                 </div>
               </div>
@@ -512,7 +514,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
             >
               <Camera className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Retake / Upload Photo of SSM</span>
+              <span>{t('Retake / Upload Photo of SSM')}</span>
             </button>
           </div>
 
@@ -525,8 +527,8 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
                     <UserCheck className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Proof 2</span>
-                    <h3 className="text-sm font-bold text-slate-900">Identification (IC / Passport)</h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('Proof 2')}</span>
+                    <h3 className="text-sm font-bold text-slate-900">{t('Identification (IC / Passport)')}</h3>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
@@ -556,15 +558,15 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               {/* AI Extraction Data */}
               <div className="rounded-2xl bg-slate-50 p-3.5 border border-slate-100 text-xs space-y-1.5 font-mono">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Director:</span>
+                  <span className="text-slate-400">{t('Director:')}</span>
                   <span className="font-bold text-slate-900">{kybState.identification.aiExtracted.fullName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Nationality:</span>
+                  <span className="text-slate-400">{t('Nationality:')}</span>
                   <span className="text-slate-700">{kybState.identification.aiExtracted.nationality}</span>
                 </div>
                 <div className="flex justify-between text-emerald-600 font-bold">
-                  <span>Biometric Face Match:</span>
+                  <span>{t('Biometric Face Match:')}</span>
                   <span>{kybState.identification.aiExtracted.faceMatchScore}%</span>
                 </div>
               </div>
@@ -586,7 +588,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
             >
               <Upload className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Upload IC / Passport Scan</span>
+              <span>{t('Upload IC / Passport Scan')}</span>
             </button>
           </div>
 
@@ -599,8 +601,8 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
                     <Video className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Proof 3</span>
-                    <h3 className="text-sm font-bold text-slate-900">Address (With Video)</h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('Proof 3')}</span>
+                    <h3 className="text-sm font-bold text-slate-900">{t('Address (With Video)')}</h3>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
@@ -624,7 +626,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
                 />
                 <div className="absolute top-2.5 left-2.5 rounded-lg bg-black/60 px-2 py-0.5 text-[10px] font-mono font-bold text-white flex items-center gap-1">
                   <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
-                  <span>VIDEO PROOF</span>
+                  <span>{t('VIDEO PROOF')}</span>
                 </div>
                 <div className="absolute bottom-2.5 right-2.5 rounded-lg bg-black/60 px-2 py-0.5 text-[10px] font-mono text-slate-300">
                   {kybState.addressVideo.duration}
@@ -634,17 +636,17 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               {/* AI Extraction Data */}
               <div className="rounded-2xl bg-slate-50 p-3.5 border border-slate-100 text-xs space-y-1.5 font-mono">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Signage Detected:</span>
+                  <span className="text-slate-400">{t('Signage Detected:')}</span>
                   <span className="font-bold text-slate-900 truncate max-w-[150px]">
                     {kybState.addressVideo.aiExtracted.detectedSignage}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">GPS Coordinates:</span>
+                  <span className="text-slate-400">{t('GPS Coordinates:')}</span>
                   <span className="text-slate-700 truncate max-w-[140px]">{kybState.addressVideo.gpsLocation}</span>
                 </div>
                 <div className="flex justify-between text-emerald-600 font-bold">
-                  <span>Premises Liveness Check:</span>
+                  <span>{t('Premises Liveness Check:')}</span>
                   <span>100% Confirmed</span>
                 </div>
               </div>
@@ -667,7 +669,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
             >
               <Video className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Record / Upload Address Video</span>
+              <span>{t('Record / Upload Address Video')}</span>
             </button>
           </div>
         </div>
@@ -688,7 +690,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
         </div>
 
         <div className="text-right shrink-0">
-          <span className="text-xs text-slate-400 block font-medium">Readiness Score</span>
+          <span className="text-xs text-slate-400 block font-medium">{t('Readiness Score')}</span>
           <span className="text-2xl font-black text-indigo-700 font-mono">
             {kybState.overallScore} / 1000
           </span>

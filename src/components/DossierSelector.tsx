@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier } from '../types/ekyb';
 import { SAMPLE_DOSSIERS, ASEAN_REGISTRIES } from '../data/mockDossiers';
 import { Building2, Globe2, ShieldCheck, CheckCircle2, PlusCircle } from 'lucide-react';
@@ -16,6 +17,7 @@ export const DossierSelector: React.FC<DossierSelectorProps> = ({
   onOpenSandbox,
   isCustomActive = false,
 }) => {
+  const { t } = useLanguage();
   const currentRegistry = ASEAN_REGISTRIES[currentDossier.country];
 
   return (
@@ -58,7 +60,7 @@ export const DossierSelector: React.FC<DossierSelectorProps> = ({
               }`}
             >
               <PlusCircle className="h-3.5 w-3.5 text-emerald-400" />
-              <span>Custom Ingestion Sandbox</span>
+              <span>{t('Custom Ingestion Sandbox')}</span>
             </button>
           </div>
 
@@ -79,7 +81,7 @@ export const DossierSelector: React.FC<DossierSelectorProps> = ({
             <span className="text-slate-700">|</span>
             <div className="flex items-center gap-1 text-slate-300">
               <ShieldCheck className="h-3.5 w-3.5 text-cyan-400" />
-              <span>Sanctions Cleared</span>
+              <span>{t('Sanctions Cleared')}</span>
             </div>
           </div>
         </div>

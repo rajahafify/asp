@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier, ShareholderNode } from '../types/ekyb';
 import { ASEAN_REGISTRIES } from '../data/mockDossiers';
 import {
@@ -19,6 +20,7 @@ interface UboGraphViewProps {
 }
 
 export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
+  const { t } = useLanguage();
   const [selectedNode, setSelectedNode] = useState<ShareholderNode>(dossier.uboTree);
   const registry = ASEAN_REGISTRIES[dossier.country];
 
@@ -41,11 +43,11 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-            <span className="font-semibold text-cyan-400 uppercase tracking-wider">Cap Table Diligence</span>
+            <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('Cap Table Diligence')}</span>
             <span>·</span>
-            <span>UBO Unrolling</span>
+            <span>{t('UBO Unrolling')}</span>
             <span>·</span>
-            <span>Sanctions & PEP Screening</span>
+            <span>{t('Sanctions & PEP Screening')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Beneficial Ownership & Cap Table Architecture
@@ -59,7 +61,7 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
         <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 shrink-0">
           <Scale className="h-5 w-5 text-cyan-400" />
           <div className="text-right">
-            <span className="block text-[11px] text-slate-400">Foreign Equity Ratio</span>
+            <span className="block text-[11px] text-slate-400">{t('Foreign Equity Ratio')}</span>
             <span className="text-base font-bold text-white font-mono">{foreignRatio}% Foreign</span>
           </div>
         </div>
@@ -121,7 +123,7 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
                 </div>
                 <div className="text-right font-mono">
                   <span className="text-xs font-bold text-cyan-300">100% Equity</span>
-                  <span className="block text-[10px] text-emerald-400">Sanctions Cleared</span>
+                  <span className="block text-[10px] text-emerald-400">{t('Sanctions Cleared')}</span>
                 </div>
               </div>
             </button>
@@ -165,10 +167,10 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
                     </div>
 
                     <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px]">
-                      <span className="text-emerald-400 font-mono">Sanctions: Cleared</span>
+                      <span className="text-emerald-400 font-mono">{t('Sanctions: Cleared')}</span>
                       {hasSub && (
                         <span className="text-cyan-400 flex items-center gap-0.5">
-                          <span>Unroll</span>
+                          <span>{t('Unroll')}</span>
                           <ChevronRight className="h-3 w-3" />
                         </span>
                       )}
@@ -266,18 +268,18 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
 
           <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-800/80 text-xs font-mono">
             <div>
-              <span className="text-slate-400 text-[11px] block">Equity Percentage</span>
+              <span className="text-slate-400 text-[11px] block">{t('Equity Percentage')}</span>
               <span className="text-sm font-bold text-white">{selectedNode.ownershipPercentage}%</span>
             </div>
             <div>
-              <span className="text-slate-400 text-[11px] block">Voting Rights</span>
+              <span className="text-slate-400 text-[11px] block">{t('Voting Rights')}</span>
               <span className="text-sm font-bold text-white">{selectedNode.votingRightsPercentage}%</span>
             </div>
           </div>
 
           {selectedNode.tinOrRegistration && (
             <div className="text-xs font-mono">
-              <span className="text-slate-400 text-[11px] block">Tax ID / NRIC / UEN</span>
+              <span className="text-slate-400 text-[11px] block">{t('Tax ID / NRIC / UEN')}</span>
               <span className="text-slate-200">{selectedNode.tinOrRegistration}</span>
             </div>
           )}
@@ -285,20 +287,20 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
           {/* Sanctions & PEP Check Box */}
           <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-3.5 space-y-2 text-xs">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-slate-200">Watchlist Screening</span>
-              <span className="text-emerald-400 font-mono text-[11px]">CLEARED</span>
+              <span className="font-semibold text-slate-200">{t('Watchlist Screening')}</span>
+              <span className="text-emerald-400 font-mono text-[11px]">{t('CLEARED')}</span>
             </div>
             <div className="space-y-1 text-[11px] text-slate-400">
               <div className="flex justify-between">
-                <span>OFAC Specially Designated Nationals</span>
+                <span>{t('OFAC Specially Designated Nationals')}</span>
                 <span className="text-emerald-400">✓ No Hit</span>
               </div>
               <div className="flex justify-between">
-                <span>MAS Enforcement & Sanctions List</span>
+                <span>{t('MAS Enforcement & Sanctions List')}</span>
                 <span className="text-emerald-400">✓ No Hit</span>
               </div>
               <div className="flex justify-between">
-                <span>Bank Negara Malaysia PEP Register</span>
+                <span>{t('Bank Negara Malaysia PEP Register')}</span>
                 <span className="text-emerald-400">✓ No Hit</span>
               </div>
             </div>
@@ -306,7 +308,7 @@ export const UboGraphView: React.FC<UboGraphViewProps> = ({ dossier }) => {
 
           {selectedNode.notes && (
             <div className="text-xs text-slate-400 bg-slate-900/40 p-3 rounded-lg border border-slate-850">
-              <span className="font-semibold text-slate-300 block mb-1">Diligence Notes:</span>
+              <span className="font-semibold text-slate-300 block mb-1">{t('Diligence Notes:')}</span>
               <p className="leading-relaxed">{selectedNode.notes}</p>
             </div>
           )}

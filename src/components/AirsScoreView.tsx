@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier } from '../types/ekyb';
 import {
   Award,
@@ -20,6 +21,7 @@ interface AirsScoreViewProps {
 }
 
 export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
+  const { t } = useLanguage();
   const [activePillar, setActivePillar] = useState<'governance' | 'financial' | 'regulatory' | 'esg'>('governance');
 
   // Simulation toggle state
@@ -66,11 +68,11 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-            <span className="font-semibold text-cyan-400 uppercase tracking-wider">Automated Diligence Audit</span>
+            <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('Automated Diligence Audit')}</span>
             <span>·</span>
-            <span>AIRS Framework (0–1000)</span>
+            <span>{t('AIRS Framework (0–1000)')}</span>
             <span>·</span>
-            <span>Cross-Border Due Diligence Benchmark</span>
+            <span>{t('Cross-Border Due Diligence Benchmark')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Enterprise & Investment Readiness Score
@@ -116,12 +118,12 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-mono text-slate-400">Pillar 1 (30%)</span>
+            <span className="text-[11px] font-mono text-slate-400">{t('Pillar 1 (30%)')}</span>
             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">
               OPTIMAL
             </span>
           </div>
-          <h4 className="font-semibold text-sm text-white">Governance & UBO Hygiene</h4>
+          <h4 className="font-semibold text-sm text-white">{t('Governance & UBO Hygiene')}</h4>
           <div className="mt-3 flex items-baseline justify-between font-mono">
             <span className="text-xl font-bold text-cyan-300">
               {airs.pillars.governanceAndUbo.score}
@@ -146,12 +148,12 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-mono text-slate-400">Pillar 2 (30%)</span>
+            <span className="text-[11px] font-mono text-slate-400">{t('Pillar 2 (30%)')}</span>
             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">
               OPTIMAL
             </span>
           </div>
-          <h4 className="font-semibold text-sm text-white">Financial & Tax Audit</h4>
+          <h4 className="font-semibold text-sm text-white">{t('Financial & Tax Audit')}</h4>
           <div className="mt-3 flex items-baseline justify-between font-mono">
             <span className="text-xl font-bold text-cyan-300">
               {airs.pillars.financialAuditability.score + (remediations.auditedFinancials ? 35 : 0)}
@@ -180,12 +182,12 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-mono text-slate-400">Pillar 3 (25%)</span>
+            <span className="text-[11px] font-mono text-slate-400">{t('Pillar 3 (25%)')}</span>
             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">
               OPTIMAL
             </span>
           </div>
-          <h4 className="font-semibold text-sm text-white">Data & Cross-Border</h4>
+          <h4 className="font-semibold text-sm text-white">{t('Data & Cross-Border')}</h4>
           <div className="mt-3 flex items-baseline justify-between font-mono">
             <span className="text-xl font-bold text-cyan-300">
               {airs.pillars.crossBorderRegulatoryAndData.score + (remediations.localVpcHosting ? 30 : 0) + (remediations.ipAssignment ? 25 : 0)}
@@ -214,12 +216,12 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-mono text-slate-400">Pillar 4 (15%)</span>
+            <span className="text-[11px] font-mono text-slate-400">{t('Pillar 4 (15%)')}</span>
             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">
               OPTIMAL
             </span>
           </div>
-          <h4 className="font-semibold text-sm text-white">ESG & Legitimacy</h4>
+          <h4 className="font-semibold text-sm text-white">{t('ESG & Legitimacy')}</h4>
           <div className="mt-3 flex items-baseline justify-between font-mono">
             <span className="text-xl font-bold text-cyan-300">
               {airs.pillars.esgAndOperationalLegitimacy.score + (remediations.dpoAppointment ? 20 : 0)}
@@ -256,7 +258,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Natural Person Traceability</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Natural Person Traceability')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.governanceAndUbo.breakdown.naturalPersonTraceability} / 100
                   </span>
@@ -265,7 +267,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Sanctions & PEP Screening</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Sanctions & PEP Screening')}</span>
                   <span className="text-base font-bold text-emerald-400">
                     {airs.pillars.governanceAndUbo.breakdown.sanctionsAndPEP} / 100
                   </span>
@@ -274,7 +276,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Statutory Ownership Limits</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Statutory Ownership Limits')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.governanceAndUbo.breakdown.statutoryOwnershipLimits} / 100
                   </span>
@@ -283,7 +285,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Board Governance & Independence</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Board Governance & Independence')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.governanceAndUbo.breakdown.boardStructureIndependence} / 100
                   </span>
@@ -294,7 +296,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               </div>
 
               <div className="p-4 rounded-lg border border-slate-800 bg-slate-900/40 text-xs">
-                <span className="font-semibold text-slate-300 block mb-2">Auditor Diligence Notes:</span>
+                <span className="font-semibold text-slate-300 block mb-2">{t('Auditor Diligence Notes:')}</span>
                 <ul className="space-y-1.5 text-slate-300 list-disc list-inside">
                   {airs.pillars.governanceAndUbo.notes.map((note, i) => (
                     <li key={i}>{note}</li>
@@ -308,7 +310,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Registry vs Financial Match</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Registry vs Financial Match')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.financialAuditability.breakdown.registryVsFinancialMatch} / 100
                   </span>
@@ -317,7 +319,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Auditor Standing</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Auditor Standing')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.financialAuditability.breakdown.auditorReputation} / 100
                   </span>
@@ -326,7 +328,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Tax Clearance Receipts</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Tax Clearance Receipts')}</span>
                   <span className="text-base font-bold text-emerald-400">
                     {airs.pillars.financialAuditability.breakdown.taxFilingReceipts} / 100
                   </span>
@@ -335,7 +337,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Solvency & Runway Health</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Solvency & Runway Health')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.financialAuditability.breakdown.solvencyAndRatioHealth} / 100
                   </span>
@@ -346,7 +348,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               </div>
 
               <div className="p-4 rounded-lg border border-slate-800 bg-slate-900/40 text-xs">
-                <span className="font-semibold text-slate-300 block mb-2">Auditor Diligence Notes:</span>
+                <span className="font-semibold text-slate-300 block mb-2">{t('Auditor Diligence Notes:')}</span>
                 <ul className="space-y-1.5 text-slate-300 list-disc list-inside">
                   {airs.pillars.financialAuditability.notes.map((note, i) => (
                     <li key={i}>{note}</li>
@@ -360,7 +362,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Data Localization (Decree 13 / PDP)</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Data Localization (Decree 13 / PDP)')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.crossBorderRegulatoryAndData.breakdown.pdpaAndDataLocalization} / 100
                   </span>
@@ -369,7 +371,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">IP Assignment Integrity</span>
+                  <span className="text-slate-400 block text-[11px]">{t('IP Assignment Integrity')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.crossBorderRegulatoryAndData.breakdown.ipAssignmentIntegrity} / 100
                   </span>
@@ -378,7 +380,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">DTAA Cross-Border Tax Treaty</span>
+                  <span className="text-slate-400 block text-[11px]">{t('DTAA Cross-Border Tax Treaty')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.crossBorderRegulatoryAndData.breakdown.crossBorderTaxTreatyPrep} / 100
                   </span>
@@ -387,7 +389,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Foreign Investment Clearance</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Foreign Investment Clearance')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.crossBorderRegulatoryAndData.breakdown.negativeListExemption} / 100
                   </span>
@@ -398,7 +400,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               </div>
 
               <div className="p-4 rounded-lg border border-slate-800 bg-slate-900/40 text-xs">
-                <span className="font-semibold text-slate-300 block mb-2">Auditor Diligence Notes:</span>
+                <span className="font-semibold text-slate-300 block mb-2">{t('Auditor Diligence Notes:')}</span>
                 <ul className="space-y-1.5 text-slate-300 list-disc list-inside">
                   {airs.pillars.crossBorderRegulatoryAndData.notes.map((note, i) => (
                     <li key={i}>{note}</li>
@@ -412,7 +414,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Premises Physical Geo-Check</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Premises Physical Geo-Check')}</span>
                   <span className="text-base font-bold text-white">
                     {airs.pillars.esgAndOperationalLegitimacy.breakdown.physicalPremisesGeoCheck} / 50
                   </span>
@@ -421,7 +423,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                   </p>
                 </div>
                 <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-                  <span className="text-slate-400 block text-[11px]">Regulatory Sandboxes & Licenses</span>
+                  <span className="text-slate-400 block text-[11px]">{t('Regulatory Sandboxes & Licenses')}</span>
                   <span className="text-base font-bold text-emerald-400">
                     {airs.pillars.esgAndOperationalLegitimacy.breakdown.regulatoryLicensesSandboxes} / 50
                   </span>
@@ -432,7 +434,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               </div>
 
               <div className="p-4 rounded-lg border border-slate-800 bg-slate-900/40 text-xs">
-                <span className="font-semibold text-slate-300 block mb-2">Auditor Diligence Notes:</span>
+                <span className="font-semibold text-slate-300 block mb-2">{t('Auditor Diligence Notes:')}</span>
                 <ul className="space-y-1.5 text-slate-300 list-disc list-inside">
                   {airs.pillars.esgAndOperationalLegitimacy.notes.map((note, i) => (
                     <li key={i}>{note}</li>
@@ -456,7 +458,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
                 className="text-[11px] text-slate-400 hover:text-white flex items-center gap-1 font-mono"
               >
                 <RotateCcw className="h-3 w-3" />
-                <span>Reset</span>
+                <span>{t('Reset')}</span>
               </button>
             )}
           </div>
@@ -475,7 +477,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               />
               <div className="text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-white">Execute Clean IP Assignment</span>
+                  <span className="font-semibold text-white">{t('Execute Clean IP Assignment')}</span>
                   <span className="font-mono text-emerald-400 text-[11px]">+25 pts</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-0.5">
@@ -493,7 +495,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               />
               <div className="text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-white">Audit via Regional Tier-1 Firm</span>
+                  <span className="font-semibold text-white">{t('Audit via Regional Tier-1 Firm')}</span>
                   <span className="font-mono text-emerald-400 text-[11px]">+35 pts</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-0.5">
@@ -511,7 +513,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               />
               <div className="text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-white">In-Country VPC Certification</span>
+                  <span className="font-semibold text-white">{t('In-Country VPC Certification')}</span>
                   <span className="font-mono text-emerald-400 text-[11px]">+30 pts</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-0.5">
@@ -529,7 +531,7 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
               />
               <div className="text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-white">Appoint Certified DPO</span>
+                  <span className="font-semibold text-white">{t('Appoint Certified DPO')}</span>
                   <span className="font-mono text-emerald-400 text-[11px]">+20 pts</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-0.5">
@@ -541,15 +543,15 @@ export const AirsScoreView: React.FC<AirsScoreViewProps> = ({ dossier }) => {
 
           <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-3.5 text-xs font-mono">
             <div className="flex justify-between text-slate-300">
-              <span>Baseline Score:</span>
+              <span>{t('Baseline Score:')}</span>
               <span>{airs.totalScore}</span>
             </div>
             <div className="flex justify-between text-emerald-400 mt-1">
-              <span>Remediation Uplift:</span>
+              <span>{t('Remediation Uplift:')}</span>
               <span>+{bonus}</span>
             </div>
             <div className="flex justify-between text-white font-bold text-sm mt-2 pt-2 border-t border-slate-800">
-              <span>Projected AIRS Score:</span>
+              <span>{t('Projected AIRS Score:')}</span>
               <span>{simulatedScore} / 1000</span>
             </div>
           </div>

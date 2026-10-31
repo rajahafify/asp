@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { AppNotification } from '../types/deals';
 import { Bell, CheckCircle2, Calendar, Sparkles, ShieldCheck, X } from 'lucide-react';
 
@@ -19,6 +20,7 @@ export const NotificationsPopover: React.FC<NotificationsPopoverProps> = ({
   onMarkAllAsRead,
   onViewAll,
 }) => {
+  const { t } = useLanguage();
   if (!isOpen) return null;
 
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -28,7 +30,7 @@ export const NotificationsPopover: React.FC<NotificationsPopoverProps> = ({
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
           <Bell className="h-4 w-4 text-indigo-600" />
-          <h3 className="text-sm font-bold text-slate-900">Notifications</h3>
+          <h3 className="text-sm font-bold text-slate-900">{t('Notifications')}</h3>
           {unreadCount > 0 && (
             <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-[11px] font-bold text-indigo-600">
               {unreadCount} new
@@ -55,7 +57,7 @@ export const NotificationsPopover: React.FC<NotificationsPopoverProps> = ({
 
       <div className="mt-3 max-h-80 space-y-2 overflow-y-auto pr-1">
         {notifications.length === 0 ? (
-          <p className="py-6 text-center text-xs text-slate-400">No notifications yet.</p>
+          <p className="py-6 text-center text-xs text-slate-400">{t('No notifications yet.')}</p>
         ) : (
           notifications.map((notif) => {
             const getIcon = () => {
@@ -102,7 +104,7 @@ export const NotificationsPopover: React.FC<NotificationsPopoverProps> = ({
       </div>
 
       <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
-        <span className="text-[11px] text-slate-400 font-medium">Activity Stream</span>
+        <span className="text-[11px] text-slate-400 font-medium">{t('Activity Stream')}</span>
         {onViewAll && (
           <button
             onClick={() => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { StartupDossier } from '../types/ekyb';
 import { X, Copy, Check, Code2, Download } from 'lucide-react';
 
@@ -9,6 +10,7 @@ interface CredentialModalProps {
 }
 
 export const CredentialModal: React.FC<CredentialModalProps> = ({ isOpen, onClose, dossier }) => {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
@@ -43,7 +45,7 @@ export const CredentialModal: React.FC<CredentialModalProps> = ({ isOpen, onClos
               <Code2 className="h-4 w-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white">W3C Verifiable Credential (VC) JSON-LD</h3>
+              <h3 className="text-sm font-bold text-white">{t('W3C Verifiable Credential (VC) JSON-LD')}</h3>
               <p className="text-xs text-slate-400">{dossier.passport.did}</p>
             </div>
           </div>
@@ -61,7 +63,7 @@ export const CredentialModal: React.FC<CredentialModalProps> = ({ isOpen, onClos
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 text-xs font-medium text-white hover:bg-cyan-500 transition-colors"
             >
               <Download className="h-3.5 w-3.5" />
-              <span>Download</span>
+              <span>{t('Download')}</span>
             </button>
             <button
               onClick={onClose}
@@ -79,7 +81,7 @@ export const CredentialModal: React.FC<CredentialModalProps> = ({ isOpen, onClos
 
         {/* Footer */}
         <div className="border-t border-slate-800 px-6 py-3 bg-slate-900 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-          <span>Schema: https://asean.org/trust/ekyb/v1</span>
+          <span>{t('Schema: https://asean.org/trust/ekyb/v1')}</span>
           <span>Signature: ES256 (ECDSA SHA-256)</span>
         </div>
       </div>

@@ -1,15 +1,17 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { ASEAN_REGISTRIES } from '../data/mockDossiers';
 import { ShieldCheck, BookOpen, Scale, Globe2, FileText, CheckCircle2 } from 'lucide-react';
 
 export const RegulatoryPlaybook: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <div className="space-y-6">
       <div className="border-b border-slate-800 pb-5">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-          <span className="font-semibold text-cyan-400 uppercase tracking-wider">ASEAN DEFA Compliance Guide</span>
+          <span className="font-semibold text-cyan-400 uppercase tracking-wider">{t('ASEAN DEFA Compliance Guide')}</span>
           <span>·</span>
-          <span>Cross-Border Legal Matrix</span>
+          <span>{t('Cross-Border Legal Matrix')}</span>
         </div>
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
           Regional Regulatory Framework & Gemma Extraction Matrix

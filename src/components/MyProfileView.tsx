@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../i18n';
 import { UserProfile, CorporateChallenge, Deal } from '../types/deals';
 import { CorporateLogoBadge } from './BrandLogos';
 import {
@@ -35,6 +36,7 @@ export const MyProfileView: React.FC<MyProfileViewProps> = ({
   onViewEkybPassport,
   onToggleChecklistItem,
 }) => {
+  const { t } = useLanguage();
   // Stepper helper for "Your Deal Progress"
   const dealStages = [
     { key: 'ai_matched', label: 'Matched', icon: CheckCircle2 },
@@ -134,7 +136,7 @@ export const MyProfileView: React.FC<MyProfileViewProps> = ({
           onClick={onViewEkybPassport}
           className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all shrink-0"
         >
-          <span>Update Profile</span>
+          <span>{t('Update Profile')}</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </button>
       </div>
@@ -149,13 +151,13 @@ export const MyProfileView: React.FC<MyProfileViewProps> = ({
                 <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600">
                   <Sparkles className="h-4 w-4" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900">Recommended Challenges</h3>
+                <h3 className="text-base font-bold text-slate-900">{t('Recommended Challenges')}</h3>
               </div>
               <button
                 onClick={onViewAllChallenges}
                 className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
               >
-                <span>See All</span>
+                <span>{t('See All')}</span>
                 <ArrowRight className="h-3 w-3" />
               </button>
             </div>
@@ -190,7 +192,7 @@ export const MyProfileView: React.FC<MyProfileViewProps> = ({
                     onClick={() => onApplyChallenge(ch)}
                     className="flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-600 hover:bg-indigo-600 hover:text-white transition-colors shrink-0"
                   >
-                    <span>Apply</span>
+                    <span>{t('Apply')}</span>
                     <ArrowRight className="h-3 w-3" />
                   </button>
                 </div>
@@ -207,13 +209,13 @@ export const MyProfileView: React.FC<MyProfileViewProps> = ({
                 <div className="p-1.5 rounded-lg bg-indigo-50 text-indigo-600">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900">Your Deal Progress</h3>
+                <h3 className="text-base font-bold text-slate-900">{t('Your Deal Progress')}</h3>
               </div>
               <button
                 onClick={onViewDealsTracker}
                 className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
               >
-                <span>Track Deals</span>
+                <span>{t('Track Deals')}</span>
                 <ArrowRight className="h-3 w-3" />
               </button>
             </div>
@@ -275,7 +277,7 @@ export const MyProfileView: React.FC<MyProfileViewProps> = ({
           </div>
 
           <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Next Action: Partner discovery meeting scheduled</span>
+            <span>{t('Next Action: Partner discovery meeting scheduled')}</span>
             <button
               onClick={onViewDealsTracker}
               className="text-xs font-bold text-indigo-600 hover:text-indigo-800"

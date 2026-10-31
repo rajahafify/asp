@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { CorporateChallenge } from '../types/deals';
 import { CorporateLogoBadge } from './BrandLogos';
 import {
@@ -25,6 +26,7 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
   onApplyChallenge,
   searchQuery = '',
 }) => {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>('All Challenges');
   const [sortBy, setSortBy] = useState<'relevant' | 'budget' | 'deadline'>('relevant');
   const [activeChallengeDetail, setActiveChallengeDetail] = useState<CorporateChallenge | null>(null);
@@ -101,9 +103,9 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
             onChange={(e) => setSortBy(e.target.value as any)}
             className="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           >
-            <option value="relevant">Most Relevant</option>
-            <option value="budget">Highest Budget</option>
-            <option value="deadline">Nearest Deadline</option>
+            <option value="relevant">{t('Most Relevant')}</option>
+            <option value="budget">{t('Highest Budget')}</option>
+            <option value="deadline">{t('Nearest Deadline')}</option>
           </select>
         </div>
       </div>
@@ -190,13 +192,13 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
                 <div className="space-y-1 text-left lg:text-right">
                   <div className="flex items-center lg:justify-end gap-1.5 text-xs text-slate-500">
                     <Briefcase className="h-3.5 w-3.5 text-slate-400" />
-                    <span>Budget:</span>
+                    <span>{t('Budget:')}</span>
                     <span className="font-bold text-slate-900 font-mono text-sm">{item.budget}</span>
                   </div>
 
                   <div className="flex items-center lg:justify-end gap-1.5 text-xs text-slate-500">
                     <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                    <span>Deadline:</span>
+                    <span>{t('Deadline:')}</span>
                     <span className="font-semibold text-slate-700">{item.deadline}</span>
                   </div>
                 </div>
@@ -205,7 +207,7 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
                   onClick={() => setActiveChallengeDetail(item)}
                   className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all whitespace-nowrap"
                 >
-                  <span>View Details</span>
+                  <span>{t('View Details')}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -243,28 +245,28 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 text-xs mb-5">
               <div>
-                <span className="text-slate-400 block text-[11px]">Budget Allocation</span>
+                <span className="text-slate-400 block text-[11px]">{t('Budget Allocation')}</span>
                 <span className="font-bold text-slate-900 font-mono text-sm">{activeChallengeDetail.budget}</span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[11px]">Submission Deadline</span>
+                <span className="text-slate-400 block text-[11px]">{t('Submission Deadline')}</span>
                 <span className="font-semibold text-slate-800">{activeChallengeDetail.deadline}</span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[11px]">AI Compatibility</span>
+                <span className="text-slate-400 block text-[11px]">{t('AI Compatibility')}</span>
                 <span className="font-bold text-emerald-600 font-mono text-sm">{activeChallengeDetail.aiMatchScore}% Match</span>
               </div>
             </div>
 
             <div className="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
               <div>
-                <h4 className="font-bold text-slate-900 mb-1">Challenge Brief</h4>
+                <h4 className="font-bold text-slate-900 mb-1">{t('Challenge Brief')}</h4>
                 <p>{activeChallengeDetail.description}</p>
               </div>
 
               {activeChallengeDetail.fullRequirements && (
                 <div>
-                  <h4 className="font-bold text-slate-900 mb-2">Technical & Scope Requirements</h4>
+                  <h4 className="font-bold text-slate-900 mb-2">{t('Technical & Scope Requirements')}</h4>
                   <ul className="space-y-2 list-disc list-inside text-slate-600">
                     {activeChallengeDetail.fullRequirements.map((req, i) => (
                       <li key={i}>{req}</li>
@@ -276,7 +278,7 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
               <div className="rounded-xl border border-indigo-100 bg-indigo-50/50 p-4">
                 <div className="flex items-center gap-2 font-bold text-indigo-900 text-xs mb-1">
                   <ShieldCheck className="h-4 w-4 text-indigo-600" />
-                  <span>eKYB Fast-Track Review Enabled</span>
+                  <span>{t('eKYB Fast-Track Review Enabled')}</span>
                 </div>
                 <p className="text-xs text-indigo-700 leading-relaxed">
                   Startups applying with a verified ASEAN Startup Passport (AIRS &gt; 850) receive priority evaluation and guaranteed discovery meeting within 5 business days.
@@ -299,7 +301,7 @@ export const CorporateChallengesView: React.FC<CorporateChallengesViewProps> = (
                 }}
                 className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all"
               >
-                <span>Apply & Post Solution</span>
+                <span>{t('Apply & Post Solution')}</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </button>
             </div>

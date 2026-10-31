@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { AppNotification } from '../types/deals';
 import {
   Bell,
@@ -23,6 +24,7 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
   onNotificationClick,
   onMarkAllAsRead,
 }) => {
+  const { t } = useLanguage();
   const [selectedFilter, setSelectedFilter] = useState<'All' | 'Matches' | 'Challenges' | 'Deals' | 'System'>('All');
 
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -64,7 +66,7 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
           className="flex items-center gap-1.5 rounded-xl border border-indigo-200 bg-white px-4 py-2 text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors self-start sm:self-auto shrink-0 shadow-sm"
         >
           <CheckCheck className="h-3.5 w-3.5" />
-          <span>Mark all as read</span>
+          <span>{t('Mark all as read')}</span>
         </button>
       </div>
 
@@ -95,7 +97,7 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
         {filteredNotifications.length === 0 ? (
           <div className="rounded-2xl border border-slate-100 bg-white p-12 text-center text-slate-400">
             <Bell className="mx-auto h-8 w-8 text-slate-300 mb-2" />
-            <p className="text-sm font-medium text-slate-600">No notifications in this category</p>
+            <p className="text-sm font-medium text-slate-600">{t('No notifications in this category')}</p>
             <p className="text-xs text-slate-400 mt-1">
               You are all caught up with your ASEAN startup activities.
             </p>
