@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../i18n';
 import { Deal, DealStage, getStagesForDealType } from '../types/deals';
 import { CorporateLogoBadge } from './BrandLogos';
 import {
@@ -39,6 +40,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
   onPostNewSolution,
   selectedDealId,
 }) => {
+  const { t } = useLanguage();
   const [activeDealId, setActiveDealId] = useState<string>(
     selectedDealId || deals[0]?.id || ''
   );
@@ -74,7 +76,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">
             <Handshake className="h-4 w-4" />
-            <span>Deal Journey & Lifecycle Management</span>
+            <span>{t('Deal Journey & Lifecycle Management')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             Deals Tracker
@@ -96,7 +98,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
               }`}
             >
               <Layers className="h-3.5 w-3.5" />
-              <span>Deal Pipeline</span>
+              <span>{t('Deal Pipeline')}</span>
             </button>
             <button
               onClick={() => setViewMode('matrix')}
@@ -107,7 +109,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
               }`}
             >
               <Columns className="h-3.5 w-3.5" />
-              <span>Side-by-Side Matrix</span>
+              <span>{t('Side-by-Side Matrix')}</span>
             </button>
           </div>
 
@@ -116,7 +118,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
             className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all"
           >
             <Sparkles className="h-3.5 w-3.5" />
-            <span>Post Solution</span>
+            <span>{t('Post Solution')}</span>
           </button>
         </div>
       </div>
@@ -146,7 +148,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-slate-200/80 bg-slate-50/70 text-slate-500 font-bold uppercase text-[10px] tracking-wider">
-                    <th className="p-3.5">Dimension</th>
+                    <th className="p-3.5">{t('Dimension')}</th>
                     <th className="p-3.5 bg-indigo-50/50 text-indigo-900 border-l border-r border-indigo-100">
                       Case 1: Cross-Border POC
                     </th>
@@ -157,7 +159,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">Startup</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('Startup')}</td>
                     <td className="p-3.5 font-bold text-slate-900 bg-indigo-50/20 border-l border-r border-indigo-100">
                       RouteSense AI
                       <span className="block text-[11px] text-slate-500 font-normal">Malaysia 🇲🇾 (Seed)</span>
@@ -177,7 +179,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                   </tr>
 
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">Partner</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('Partner')}</td>
                     <td className="p-3.5 font-bold text-slate-900 bg-indigo-50/20 border-l border-r border-indigo-100">
                       Nusantara Express Logistics
                       <span className="block text-[11px] text-slate-500 font-normal">Indonesia 🇮🇩 (Corporate)</span>
@@ -197,7 +199,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                   </tr>
 
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">Core Need</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('Core Need')}</td>
                     <td className="p-3.5 bg-indigo-50/20 border-l border-r border-indigo-100">
                       Market entry into Indonesia + Corporate pilot customer
                     </td>
@@ -213,7 +215,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                   </tr>
 
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">AI Match Score</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('AI Match Score')}</td>
                     <td className="p-3.5 font-bold text-indigo-700 bg-indigo-50/20 border-l border-r border-indigo-100">
                       94% AI Match
                       <span className="block text-[10px] text-emerald-600 font-mono">Cross-Border POC</span>
@@ -233,7 +235,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                   </tr>
 
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">Custom Stage 3</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('Custom Stage 3')}</td>
                     <td className="p-3.5 bg-indigo-50/20 border-l border-r border-indigo-100 font-semibold text-slate-800">
                       Proposal Submitted (8-wk pilot)
                     </td>
@@ -271,7 +273,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                   </tr>
 
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">Final Outcome</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('Final Outcome')}</td>
                     <td className="p-3.5 font-bold text-emerald-700 bg-indigo-50/20 border-l border-r border-indigo-100">
                       🎉 Commercial Client Secured
                       <span className="block text-[10px] text-slate-500 font-mono">USD 350,000 Contract</span>
@@ -291,7 +293,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                   </tr>
 
                   <tr>
-                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">Interactive Demo</td>
+                    <td className="p-3.5 font-bold text-slate-400 bg-slate-50/40">{t('Interactive Demo')}</td>
                     <td className="p-3.5 bg-indigo-50/20 border-l border-r border-indigo-100">
                       <button
                         onClick={() => {
@@ -435,7 +437,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                         onClick={handleNextStage}
                         className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all"
                       >
-                        <span>Advance to Next Stage</span>
+                        <span>{t('Advance to Next Stage')}</span>
                         <ArrowRight className="h-4 w-4" />
                       </button>
                     ) : (
@@ -444,7 +446,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                         className="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700 transition-all"
                       >
                         <Trophy className="h-4 w-4" />
-                        <span>View Final Outcome Screen</span>
+                        <span>{t('View Final Outcome Screen')}</span>
                       </button>
                     )}
                   </div>
@@ -571,11 +573,11 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                       <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
                         <span className="text-[11px] font-bold text-slate-700 block line-clamp-1">{kpi.label}</span>
                         <div className="flex items-baseline justify-between pt-1">
-                          <span className="text-xs text-slate-400 font-mono">Target:</span>
+                          <span className="text-xs text-slate-400 font-mono">{t('Target:')}</span>
                           <span className="font-mono font-bold text-slate-800">{kpi.target}</span>
                         </div>
                         <div className="flex items-baseline justify-between text-emerald-600">
-                          <span className="text-xs font-mono">Current:</span>
+                          <span className="text-xs font-mono">{t('Current:')}</span>
                           <span className="font-mono font-bold">{kpi.currentStatus}</span>
                         </div>
                       </div>
@@ -595,8 +597,8 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                           <Calendar className="h-4 w-4" />
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Stage 2</span>
-                          <h3 className="text-sm font-bold text-slate-900">Scheduled Meeting Details</h3>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('Stage 2')}</span>
+                          <h3 className="text-sm font-bold text-slate-900">{t('Scheduled Meeting Details')}</h3>
                         </div>
                       </div>
                       <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
@@ -614,7 +616,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                         <span>{activeDeal.scheduledMeeting.location}</span>
                       </div>
                       <div className="pt-2 border-t border-slate-100">
-                        <span className="text-[11px] text-slate-400 block mb-1">Confirmed Attendees:</span>
+                        <span className="text-[11px] text-slate-400 block mb-1">{t('Confirmed Attendees:')}</span>
                         <div className="flex flex-wrap gap-1.5">
                           {activeDeal.scheduledMeeting.attendees.map((att, i) => (
                             <span key={i} className="px-2 py-0.5 rounded-lg bg-slate-100 text-[10px] font-medium text-slate-700">
@@ -636,7 +638,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                           <FileText className="h-4 w-4" />
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Stage 3</span>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">{t('Stage 3')}</span>
                           <h3 className="text-sm font-bold text-slate-900">
                             {activeDeal.dealType === 'investment' ? 'Pitch Deck & Terms' : 'Proposal Specs'}
                           </h3>
@@ -653,7 +655,7 @@ export const DealsTrackerView: React.FC<DealsTrackerViewProps> = ({
                         {activeDeal.submittedProposal.summary}
                       </p>
                       <div className="pt-2 flex justify-between font-mono text-[11px] border-t border-slate-100">
-                        <span className="text-slate-400">Timeline:</span>
+                        <span className="text-slate-400">{t('Timeline:')}</span>
                         <span className="font-bold text-slate-800">{activeDeal.submittedProposal.timeline}</span>
                       </div>
                     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../i18n';
 import {
   Settings,
   Cpu,
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export const SettingsView: React.FC = () => {
+  const { t } = useLanguage();
   const [apiKey, setApiKey] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
   const [selectedModel, setSelectedModel] = useState<string>('gemma-4');
@@ -105,7 +107,7 @@ export const SettingsView: React.FC = () => {
       <div className="border-b border-slate-200/80 pb-5">
         <div className="flex items-center gap-2 text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">
           <Settings className="h-4 w-4" />
-          <span>System & Model Configuration</span>
+          <span>{t('System & Model Configuration')}</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
           Settings & AI Engine
@@ -140,7 +142,7 @@ export const SettingsView: React.FC = () => {
           {isSaved && (
             <span className="flex items-center gap-1 text-[11px] font-mono text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-xl">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>Key Active</span>
+              <span>{t('Key Active')}</span>
             </span>
           )}
         </div>
@@ -184,7 +186,7 @@ export const SettingsView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleClearKey}
-                title="Clear key"
+                title={t('Clear key')}
                 className="p-2.5 rounded-xl border border-slate-200 text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
               >
                 <Trash2 className="h-4 w-4" />
@@ -212,12 +214,12 @@ export const SettingsView: React.FC = () => {
             {isTesting ? (
               <>
                 <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                <span>Pinging Gemma 4...</span>
+                <span>{t('Pinging Gemma 4...')}</span>
               </>
             ) : (
               <>
                 <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                <span>Test Live Gemma 4 Connection</span>
+                <span>{t('Test Live Gemma 4 Connection')}</span>
               </>
             )}
           </button>
@@ -336,21 +338,21 @@ export const SettingsView: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-            <span className="text-slate-400 block text-[11px]">Primary Model</span>
+            <span className="text-slate-400 block text-[11px]">{t('Primary Model')}</span>
             <span className="font-bold text-slate-900 block mt-0.5 font-mono">Gemma 4</span>
-            <span className="text-emerald-600 text-[11px] font-semibold">Active & Pre-loaded</span>
+            <span className="text-emerald-600 text-[11px] font-semibold">{t('Active & Pre-loaded')}</span>
           </div>
           <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-            <span className="text-slate-400 block text-[11px]">Demo Mode API Key</span>
+            <span className="text-slate-400 block text-[11px]">{t('Demo Mode API Key')}</span>
             <span className="font-bold text-slate-900 block mt-0.5 font-mono">
               {isSaved ? 'Configured (Active)' : 'Client / Env Fallback'}
             </span>
-            <span className="text-slate-500 text-[11px]">Direct UI Entry</span>
+            <span className="text-slate-500 text-[11px]">{t('Direct UI Entry')}</span>
           </div>
           <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-            <span className="text-slate-400 block text-[11px]">Sovereignty Model</span>
+            <span className="text-slate-400 block text-[11px]">{t('Sovereignty Model')}</span>
             <span className="font-bold text-slate-900 block mt-0.5">ASEAN DEFA</span>
-            <span className="text-slate-500 text-[11px]">Malaysia PDPA & Indonesia UU PDP</span>
+            <span className="text-slate-500 text-[11px]">{t('Malaysia PDPA & Indonesia UU PDP')}</span>
           </div>
         </div>
       </div>
