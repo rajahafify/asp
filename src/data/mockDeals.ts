@@ -3,9 +3,9 @@ import { CorporateChallenge, Deal, UserProfile, AppNotification } from '../types
 // 4 Personas matching the 4 Mock Cases
 export const DEMO_STARTUP_PERSONAS: Record<string, UserProfile> = {
   routesense: {
-    name: 'Faizal Hakim',
+    name: 'RouteSense Founder',
     title: 'Co-Founder & CEO',
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    avatarUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=routesense&backgroundColor=c0aede,d1d4f9,ffd5dc',
     companyName: 'RouteSense AI Sdn Bhd',
     companyCountry: 'Malaysia 🇲🇾',
     industry: 'Logistics / AI',
@@ -29,9 +29,9 @@ export const DEMO_STARTUP_PERSONAS: Record<string, UserProfile> = {
     ],
   },
   ecopack: {
-    name: 'Dr. Cheryl Lim',
+    name: 'EcoPack Founder',
     title: 'Founder & Chief Scientist',
-    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    avatarUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=ecopack&backgroundColor=c0aede,d1d4f9,ffd5dc',
     companyName: 'EcoPack Labs Pte Ltd',
     companyCountry: 'Singapore 🇸🇬',
     industry: 'Climate Tech / Sustainable Packaging',
@@ -54,9 +54,9 @@ export const DEMO_STARTUP_PERSONAS: Record<string, UserProfile> = {
     ],
   },
   medflow: {
-    name: 'Dr. Ariff Rahman',
+    name: 'MedFlow Founder',
     title: 'CEO & Medical Director',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    avatarUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=medflow&backgroundColor=c0aede,d1d4f9,ffd5dc',
     companyName: 'MedFlow Technologies Sdn Bhd',
     companyCountry: 'Malaysia 🇲🇾',
     industry: 'HealthTech / Enterprise SaaS',
@@ -78,9 +78,9 @@ export const DEMO_STARTUP_PERSONAS: Record<string, UserProfile> = {
     ],
   },
   aquasense: {
-    name: 'Somchai Prasert',
+    name: 'AquaSense Founder',
     title: 'Managing Director',
-    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    avatarUrl: 'https://api.dicebear.com/9.x/notionists/svg?seed=aquasense&backgroundColor=c0aede,d1d4f9,ffd5dc',
     companyName: 'AquaSense Innovations Co., Ltd.',
     companyCountry: 'Thailand 🇹🇭',
     industry: 'AgriTech / IoT',
@@ -172,7 +172,7 @@ export const CORPORATE_CHALLENGES: CorporateChallenge[] = [
       'Integrate with hospital electronic medical records (EMR) via PDPA-compliant sandbox.',
       'Demonstrate measurable queue time reduction and doctor scheduling load balancing.',
     ],
-    contactPerson: 'Dr. Evelyn Tan, Chief Medical Informatics Officer @ PacificCare',
+    contactPerson: 'Chief Medical Informatics Officer @ PacificCare',
   },
   {
     id: 'ch-vietagri-04',
@@ -271,7 +271,7 @@ export const INITIAL_DEALS: Deal[] = [
       location: 'Nusantara Express Tech Hub, Jakarta Selatan & Zoom',
       meetingUrl: 'https://meet.google.com/nusantara-routesense-pilot',
       attendees: [
-        'Faizal Hakim (RouteSense CEO)',
+        'RouteSense CEO',
         'Bambang Pratama (VP Last-Mile Logistics, Nusantara Express)',
         'Indra Wijaya (Fleet Telematics Lead)',
       ],
@@ -383,7 +383,7 @@ export const INITIAL_DEALS: Deal[] = [
       location: 'Virtual Partner Pitch & Introduction Call',
       meetingUrl: 'https://meet.google.com/greenventures-ecopack-seed',
       attendees: [
-        'Dr. Cheryl Lim (EcoPack Founder)',
+        'EcoPack Founder',
         'Kasem Siripong (Managing Partner, ASEAN Green Ventures)',
         'Nattaporn R. (Senior Investment Associate)',
       ],
@@ -496,8 +496,8 @@ export const INITIAL_DEALS: Deal[] = [
       location: 'PacificCare Medical Centre, Novena, Singapore & Teams',
       meetingUrl: 'https://meet.pacificcare.sg/medflow-scheduling',
       attendees: [
-        'Dr. Ariff Rahman (MedFlow CEO)',
-        'Dr. Evelyn Tan (Chief Medical Informatics Officer, PacificCare)',
+        'MedFlow CEO',
+        'Chief Medical Informatics Officer, PacificCare',
         'Jason Goh (Director of Hospital Operations)',
       ],
     },
@@ -595,7 +595,7 @@ export const INITIAL_DEALS: Deal[] = [
       location: 'VietAgri Commercial Tower, District 1, Ho Chi Minh City & Zoom',
       meetingUrl: 'https://meet.google.com/vietagri-aquasense-expansion',
       attendees: [
-        'Somchai Prasert (AquaSense Managing Director)',
+        'AquaSense Managing Director',
         'Nguyen Van Minh (Commercial Director, VietAgri)',
         'Tran Thi Mai (Head of Cooperative Partnerships)',
       ],
