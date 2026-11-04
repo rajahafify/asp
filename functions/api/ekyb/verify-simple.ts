@@ -53,6 +53,8 @@ Read the attached files and check them against the company profile above. For an
     parsed.items = items;
     parsed.totalScore = totalScore;
     parsed.maxScore = 100;
+    // Pre-clearance score out of 1000, the scale the passport uses
+    parsed.preClearanceScore = totalScore * 10;
     parsed.isApproved = totalScore >= APPROVAL_TOTAL && items.every((item) => item.passed);
     parsed.modelUsed = modelToUse;
     return json({ success: true, result: parsed });
