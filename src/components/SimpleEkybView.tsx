@@ -31,6 +31,21 @@ interface VerificationItem {
   notes: string;
 }
 
+interface VerificationResult {
+  isApproved: boolean;
+  totalScore: number;
+  preClearanceScore: number;
+  items: VerificationItem[];
+  extractedData: {
+    verifiedCompanyName: string;
+    verifiedSsmNumber: string;
+    verifiedDirector: string;
+    verifiedAddress: string;
+  };
+  auditSummary: string;
+  modelUsed: string;
+}
+
 interface SimpleEkybViewProps {
   onVerificationComplete?: (state: KybVerificationState) => void;
   startEmpty?: boolean;
@@ -41,7 +56,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
   const [kybState, setKybState] = useState<KybVerificationState>(startEmpty ? EMPTY_KYB_DATA : DEFAULT_KYB_DATA);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
-  const [verificationItems, setVerificationItems] = useState<VerificationItem[]>([]);
+  const [verificationResult, setVerificationResult] = useState<VerificationResult | null>(null);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const ssmInputRef = useRef<HTMLInputElement>(null);
   const identificationInputRef = useRef<HTMLInputElement>(null);
@@ -169,7 +184,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
   const handleRunAiVerification = async () => {
     setIsVerifying(true);
     setVerificationFeedback(null);
-    setVerificationItems([]);
+    setVerificationResult(null);
 
     const activeKey = localStorage.getItem('asp_demo_gemini_api_key') || '';
     const savedModel = localStorage.getItem('asp_preferred_model') || 'gemma-4';
@@ -236,7 +251,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
             `Risk assessment rating: ${result.riskRating || 'LOW'}`,
           ],
         }));
-        setVerificationItems(result.items ?? []);
+        setVerificationResult(result);
         setVerificationFeedback(
           result.isApproved
             ? `Verified by ${result.modelUsed || 'Gemma 4'}: ${result.totalScore}/100.`
@@ -291,15 +306,48 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
       </div>
 
       {/* Per-item verification scores, out of 100 in total */}
-      {verificationItems.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900">Verification score</span>
-            <span className="font-mono text-xs font-bold text-indigo-700">
-              {verificationItems.reduce((sum, item) => sum + item.score, 0)}/100
+      {verificationResult && (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Passport pre-clearance</span>
+              <span className="text-2xl font-extrabold text-slate-900">
+                {verificationResult.preClearanceScore}
+                <span className="text-sm font-semibold text-slate-400">/1000</span>
+              </span>
+            </div>
+            <span
+              className={`rounded-full px-3 py-1 text-xs font-bold ${
+                verificationResult.isApproved ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
+              }`}
+            >
+              {verificationResult.isApproved ? 'Approved · ready to attach to proposals' : 'Not approved'}
             </span>
           </div>
-          {verificationItems.map((item) => (
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div className="rounded-xl bg-slate-50 p-3">
+              <span className="text-slate-400 block text-[11px]">Verified company</span>
+              <span className="font-semibold text-slate-900">{verificationResult.extractedData.verifiedCompanyName || '—'}</span>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-3">
+              <span className="text-slate-400 block text-[11px]">SSM number</span>
+              <span className="font-mono font-semibold text-slate-900">{verificationResult.extractedData.verifiedSsmNumber || '—'}</span>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-3">
+              <span className="text-slate-400 block text-[11px]">Verified director</span>
+              <span className="font-semibold text-slate-900">{verificationResult.extractedData.verifiedDirector || '—'}</span>
+            </div>
+            <div className="rounded-xl bg-slate-50 p-3">
+              <span className="text-slate-400 block text-[11px]">Verified address</span>
+              <span className="font-semibold text-slate-900">{verificationResult.extractedData.verifiedAddress || '—'}</span>
+            </div>
+          </div>
+
+          <p className="text-xs text-slate-600 leading-relaxed">{verificationResult.auditSummary}</p>
+
+          <div className="space-y-3">
+          {verificationResult.items.map((item) => (
             <div key={item.id} className="space-y-1">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold text-slate-800">{item.label}</span>
@@ -316,6 +364,7 @@ export const SimpleEkybView: React.FC<SimpleEkybViewProps> = ({ onVerificationCo
               {item.notes && <p className="text-[11px] text-slate-500">{item.notes}</p>}
             </div>
           ))}
+          </div>
         </div>
       )}
 
